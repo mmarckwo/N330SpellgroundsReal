@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 43dc5692d7f7291409d4ffe25cca3b4b
+guid: 26b4629b7baf9c143ae2357ceab162bd
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
@@ -7,13 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: platform
-    second: {fileID: 2100000, guid: d2a4aa3b5671157429eb30bf1573fed5, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: pole
-    second: {fileID: 2100000, guid: 32828b403dc162842a4838fa28425c3d, type: 2}
+      name: cloud
+    second: {fileID: 2100000, guid: 76eb2b3876f9d344d943c6dc0c63640d, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
