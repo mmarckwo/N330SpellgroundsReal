@@ -1848,6 +1848,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2967925188582634202, guid: 2e8e0c48ea1ac4c4cbb9db0d5271fd9e, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2967925188582634202, guid: 2e8e0c48ea1ac4c4cbb9db0d5271fd9e, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5561699808131834134, guid: 2e8e0c48ea1ac4c4cbb9db0d5271fd9e, type: 3}
       propertyPath: m_RootOrder
       value: 4
