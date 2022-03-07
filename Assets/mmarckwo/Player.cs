@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
         if (Input.GetButtonDown("Fire1"))
         {
             GameObject attack = Instantiate(attackSpell, transform.position, transform.rotation);
-            attack.GetComponent<Rigidbody>().AddRelativeForce(shootSpeed, 0, 0);
+            attack.GetComponent<Rigidbody>().AddRelativeForce(0, 0, shootSpeed);
 
         }
 
