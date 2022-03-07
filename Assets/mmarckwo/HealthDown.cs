@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthUp : MonoBehaviour
+public class HealthDown : MonoBehaviour
 {
 
     // on collide increase player health.
@@ -13,7 +13,7 @@ public class HealthUp : MonoBehaviour
         if(other.gameObject.tag == "Player")
         {
             Destroy(this.transform.parent.gameObject);
-            other.SendMessage("HealthUp");
+            other.SendMessage("HealthDown");
         }
     }
 }

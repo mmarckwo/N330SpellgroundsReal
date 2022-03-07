@@ -8,6 +8,9 @@ public class Player : MonoBehaviour
     public GameObject attackSpell;
     public float shootSpeed = 700f;
 
+    public float maxHealth = 10.0f;
+    private float health;
+
     public float speed = 10.0f;
     private float translation;
     private float straffe;
@@ -16,6 +19,9 @@ public class Player : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+
+        // set player to be at full HP.
+        health = maxHealth;
     }
 
     // Update is called once per frame
@@ -38,5 +44,33 @@ public class Player : MonoBehaviour
             // turn on the cursor
             Cursor.lockState = CursorLockMode.None;
         }
+    }
+
+    void HealthUp()
+    {
+        // restore HP by some randomly decided value. 
+        health += 4.2f;
+
+        // clamp health to not go above max HP. 
+        if(health > maxHealth)
+        {
+            health = maxHealth;
+        } 
+
+        Debug.Log(health);
+    }
+
+    void HealthDown()
+    {
+        // decrease health by arbitrarily decided value.
+        health -= 1.2f;
+
+        // clamp health to not go below 0. 
+        if (health < 0)
+        {
+            health = 0;
+        }
+
+        Debug.Log(health);
     }
 }
