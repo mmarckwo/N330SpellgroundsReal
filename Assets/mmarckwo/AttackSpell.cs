@@ -6,6 +6,7 @@ public class AttackSpell : MonoBehaviour
 {
 
     public GameObject hitEffect;
+    public string spellName = "Attack";
 
     private float timer = 0.0f;
     private float destroyTime = 1.0f;
