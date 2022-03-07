@@ -8,6 +8,15 @@ public class HealthUp : MonoBehaviour
     // on collide increase player health.
     // repeat same thing for other powerups.
 
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "Player")
+        {
+            Debug.Log("player collided.");
+            Destroy(this.transform.parent.gameObject);
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
