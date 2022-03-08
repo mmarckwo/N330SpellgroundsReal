@@ -15,6 +15,9 @@ public class MouseCamLook : MonoBehaviour
     // smooth the mouse moving
     private Vector2 smoothV;
 
+    // reference variable for player script to access camera pitch.
+    public Quaternion lookAngle;
+
     // Use this for initialization
     void Start()
     {
@@ -24,7 +27,7 @@ public class MouseCamLook : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // md is mosue delta
+        // md is mouse delta
         var md = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
         md = Vector2.Scale(md, new Vector2(sensitivity * smoothing, sensitivity * smoothing));
         // the interpolated float result between the two float values
@@ -37,7 +40,10 @@ public class MouseCamLook : MonoBehaviour
         mouseLook.y = Mathf.Clamp(mouseLook.y, -90f, 90f);
 
         // vector3.right means the x-axis
-        transform.localRotation = Quaternion.AngleAxis(-mouseLook.y, Vector3.right);
+        lookAngle = Quaternion.AngleAxis(-mouseLook.y, Vector3.right);
+
+        transform.localRotation = lookAngle;
+
         character.transform.localRotation = Quaternion.AngleAxis(mouseLook.x, character.transform.up);
     }
 }

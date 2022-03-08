@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public MouseCamLook playerCam;
 
     public GameObject attackSpell;
     public float shootSpeed = 700f;
@@ -34,7 +35,9 @@ public class Player : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            GameObject attack = Instantiate(attackSpell, transform.position, transform.rotation);
+
+            // rotation combines player rotation and camera pitch.
+            GameObject attack = Instantiate(attackSpell, transform.position, (transform.rotation * playerCam.lookAngle));
             attack.GetComponent<Rigidbody>().AddRelativeForce(0, 0, shootSpeed);
 
         }
