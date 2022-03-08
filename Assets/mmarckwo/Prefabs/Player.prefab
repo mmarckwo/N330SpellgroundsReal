@@ -99,6 +99,7 @@ MonoBehaviour:
   sensitivity: 5
   smoothing: 2
   character: {fileID: 0}
+  lookAngle: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &2678046324212233468
 GameObject:
   m_ObjectHideFlags: 0
@@ -111,8 +112,8 @@ GameObject:
   - component: {fileID: 6085546558134102076}
   - component: {fileID: 2967925188582634202}
   - component: {fileID: 920387203095324708}
-  - component: {fileID: 4672111870615250460}
   - component: {fileID: 125196307}
+  - component: {fileID: 4672111870615250460}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -198,21 +199,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4672111870615250460
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2678046324212233468}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f7bc488ccdc5f84794dd685d2b27c88, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackSpell: {fileID: 5265006535068929657, guid: 846fd401b3920c14885deb82d015f712, type: 3}
-  shootSpeed: 700
-  speed: 10
 --- !u!54 &125196307
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -229,3 +215,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4672111870615250460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2678046324212233468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f7bc488ccdc5f84794dd685d2b27c88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 10
+  groundCheck: {fileID: 0}
+  groundDistance: 0.4
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 0
+  speed: 10

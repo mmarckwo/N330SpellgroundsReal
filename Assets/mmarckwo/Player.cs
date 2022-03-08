@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public MouseCamLook playerCam;
-
-    public GameObject attackSpell;
-    public float shootSpeed = 700f;
 
     public float maxHealth = 10.0f;
     private float health;
@@ -30,19 +26,9 @@ public class Player : MonoBehaviour
         health = maxHealth;
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        if (Input.GetButtonDown("Fire1"))
-        {
 
-            // rotation combines player rotation and camera pitch.
-            GameObject attack = Instantiate(attackSpell, transform.position, (transform.rotation * playerCam.lookAngle));
-            attack.GetComponent<Rigidbody>().AddRelativeForce(0, 0, shootSpeed);
-
-        }
-
-        // temp. 
         translation = Input.GetAxis("Vertical") * speed * Time.deltaTime;
         straffe = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
         transform.Translate(straffe, 0, translation);
@@ -50,6 +36,7 @@ public class Player : MonoBehaviour
         // add a sphere to the player to check for jump availability.
         //isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask
 
+        // change this to a method.
         if (Input.GetKeyDown("escape"))
         {
             // turn on the cursor
