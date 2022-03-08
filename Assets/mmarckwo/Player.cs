@@ -21,7 +21,6 @@ public class Player : MonoBehaviour
     bool isGrounded;
 
     public float speed = 10.0f;
-    public float gravity = -9.8f;
     private float translation;
     private float straffe;
 
