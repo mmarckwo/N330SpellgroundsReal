@@ -11,7 +11,17 @@ public class Player : MonoBehaviour
     public float maxHealth = 10.0f;
     private float health;
 
+    private CharacterController controller;
+    Vector3 velocity;
+    
+
+    public Transform groundCheck;
+    public float groundDistance = .4f;
+    public LayerMask groundMask;
+    bool isGrounded;
+
     public float speed = 10.0f;
+    public float gravity = -9.8f;
     private float translation;
     private float straffe;
 
@@ -38,6 +48,9 @@ public class Player : MonoBehaviour
         translation = Input.GetAxis("Vertical") * speed * Time.deltaTime;
         straffe = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
         transform.Translate(straffe, 0, translation);
+
+        // add a sphere to the player to check for jump availability.
+        //isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask
 
         if (Input.GetKeyDown("escape"))
         {
