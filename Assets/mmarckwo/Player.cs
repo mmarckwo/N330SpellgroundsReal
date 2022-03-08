@@ -11,10 +11,6 @@ public class Player : MonoBehaviour
     public float maxHealth = 10.0f;
     private float health;
 
-    private CharacterController controller;
-    Vector3 velocity;
-    
-
     public Transform groundCheck;
     public float groundDistance = .4f;
     public LayerMask groundMask;
