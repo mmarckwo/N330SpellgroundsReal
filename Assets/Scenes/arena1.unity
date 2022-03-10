@@ -1963,6 +1963,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4672111870615250460, guid: 2e8e0c48ea1ac4c4cbb9db0d5271fd9e, type: 3}
+      propertyPath: respawnLocation
+      value: 
+      objectReference: {fileID: 1164806650}
     - target: {fileID: 5561699808131834134, guid: 2e8e0c48ea1ac4c4cbb9db0d5271fd9e, type: 3}
       propertyPath: m_RootOrder
       value: 2
