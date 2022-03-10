@@ -28,6 +28,9 @@ public class Player : MonoBehaviour
     public LayerMask groundMask;
     private bool isGrounded;
 
+    [Header("Respawner")]
+    public Transform respawnLocation;
+
 
     // Start is called before the first frame update
     void Start()
@@ -77,6 +80,11 @@ public class Player : MonoBehaviour
         {
             //rb.AddForce(new Vector3(0, 1, 0) * jumpForce, ForceMode.Impulse); 
             rb.velocity = (new Vector3(0, 1, 0) * jumpForce);
+        }
+
+        if(gameObject.transform.position.y <= -80)
+        {
+            gameObject.transform.position = respawnLocation.transform.position;
         }
     }
 

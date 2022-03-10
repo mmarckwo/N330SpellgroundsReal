@@ -24,8 +24,8 @@ public class MouseCamLook : MonoBehaviour
         character = this.transform.parent.gameObject;
     }
 
-    // Update is called once per frame
-    void Update()
+    // LateUpdate so that player's movement updates before the camera's movement.
+    void LateUpdate()
     {
         // md is mouse delta
         var md = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
