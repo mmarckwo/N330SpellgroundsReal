@@ -2811,18 +2811,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1757780001}
     - target: {fileID: 4672111870615250460, guid: 2e8e0c48ea1ac4c4cbb9db0d5271fd9e, type: 3}
-      propertyPath: goodHealth.b
-      value: 0.5372549
-      objectReference: {fileID: 0}
-    - target: {fileID: 4672111870615250460, guid: 2e8e0c48ea1ac4c4cbb9db0d5271fd9e, type: 3}
-      propertyPath: goodHealth.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4672111870615250460, guid: 2e8e0c48ea1ac4c4cbb9db0d5271fd9e, type: 3}
-      propertyPath: goodHealth.r
-      value: 0.27058825
-      objectReference: {fileID: 0}
-    - target: {fileID: 4672111870615250460, guid: 2e8e0c48ea1ac4c4cbb9db0d5271fd9e, type: 3}
       propertyPath: respawnLocation
       value: 
       objectReference: {fileID: 1164806650}
