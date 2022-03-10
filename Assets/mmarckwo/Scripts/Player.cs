@@ -75,6 +75,12 @@ public class Player : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
         }
 
+        // lock the cursor back in when the game is clicked.
+        if (Input.GetButtonDown("Fire1"))
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+
         // jump button. only jump when the player is touching the ground.
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
@@ -82,6 +88,7 @@ public class Player : MonoBehaviour
             rb.velocity = (new Vector3(0, 1, 0) * jumpForce);
         }
 
+        // respawn the player after going below 80 in the world.
         if(gameObject.transform.position.y <= -80)
         {
             gameObject.transform.position = respawnLocation.transform.position;
