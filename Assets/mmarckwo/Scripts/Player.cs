@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -31,11 +32,20 @@ public class Player : MonoBehaviour
     [Header("Respawner")]
     public Transform respawnLocation;
 
+    [Header("Health Bar Properties")]
+    public GameObject healthBar;
+    private Image healthBarFill;
+    public Color goodHealth = new Color(69, 255, 137);
+    public Color lowHealth = new Color(255, 0, 85);
+
 
     // Start is called before the first frame update
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+
+        // get fill image of health bar.
+        healthBarFill = healthBar.GetComponent<Image>();
 
         // get rigidbody component, use custom gravity.
         rb = GetComponent<Rigidbody>();
@@ -104,7 +114,15 @@ public class Player : MonoBehaviour
         if(health > maxHealth)
         {
             health = maxHealth;
-        } 
+        }
+        // make health bar green again if player recovers enough HP.
+        if (health / maxHealth > .30)
+        {
+            healthBarFill.color = goodHealth;
+        }
+
+        // update health bar fill amount.
+        healthBarFill.fillAmount = health / maxHealth;
 
         Debug.Log(health);
     }
@@ -118,6 +136,20 @@ public class Player : MonoBehaviour
         if (health < 0)
         {
             health = 0;
+        }
+
+        // update health bar fill amount.
+        healthBarFill.fillAmount = health / maxHealth;
+
+        // make the health bar red when the player is at low HP.
+        if ((health / maxHealth <= .30) || (health == 1))
+        {
+            healthBarFill.color = lowHealth;
+        }
+        // when the player dies.
+        if (health == 0)
+        {
+            Debug.Log("DEAD");
         }
 
         Debug.Log(health);

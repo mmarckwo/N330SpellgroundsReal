@@ -326,13 +326,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 10
   jumpForce: 12
+  speed: 10
+  gravityScale: 2.5
   groundCheck: {fileID: 182155893}
   groundDistance: 0.5
   groundMask:
     serializedVersion: 2
     m_Bits: 64
-  speed: 10
-  gravityScale: 2.5
+  respawnLocation: {fileID: 0}
+  healthBar: {fileID: 0}
+  lowHealth: {r: 1, g: 0, b: 0.33333334, a: 1}
 --- !u!114 &147685537
 MonoBehaviour:
   m_ObjectHideFlags: 0
