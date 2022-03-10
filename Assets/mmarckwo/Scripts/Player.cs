@@ -5,22 +5,38 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
 
+    [Header("Physics")]
     public float maxHealth = 10.0f;
     private float health;
-
-    public Transform groundCheck;
-    public float groundDistance = .4f;
-    public LayerMask groundMask;
-    bool isGrounded;
-
+    public float jumpForce = 10.0f;
+    
     public float speed = 10.0f;
     private float translation;
     private float straffe;
+    private Vector3 movement;
+    private float smoother;
+
+    private Rigidbody rb;
+    
+    // player will use its own gravity for jump physics.
+    public float gravityScale = 1.0f;
+    public static float globalGravity = -9.81f;
+
+    [Header("Jump Checking")]
+    public Transform groundCheck;
+    public float groundDistance = .4f;
+    public LayerMask groundMask;
+    private bool isGrounded;
+
 
     // Start is called before the first frame update
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+
+        // get rigidbody component, use custom gravity.
+        rb = GetComponent<Rigidbody>();
+        rb.useGravity = false;
 
         // set player to be at full HP.
         health = maxHealth;
@@ -28,19 +44,39 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
+        // gravity.
+        Vector3 gravity = globalGravity * gravityScale * Vector3.up;
+        rb.AddForce(gravity, ForceMode.Acceleration);
 
+        // movement.
         translation = Input.GetAxis("Vertical") * speed * Time.deltaTime;
         straffe = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
-        transform.Translate(straffe, 0, translation);
+        movement = new Vector3(straffe, 0, translation);
+        
+        smoother = movement.magnitude;
+        Mathf.Clamp(smoother, 0, 1);
+        
+        movement.Normalize();
+        transform.Translate(movement * smoother);
 
-        // add a sphere to the player to check for jump availability.
-        //isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask
+        // check for jump availability.
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+    }
 
-        // change this to a method.
+    void Update()
+    {
+        // free cursor with ESC.
         if (Input.GetKeyDown("escape"))
         {
             // turn on the cursor
             Cursor.lockState = CursorLockMode.None;
+        }
+
+        // jump button. only jump when the player is touching the ground.
+        if (Input.GetButtonDown("Jump") && isGrounded)
+        {
+            //rb.AddForce(new Vector3(0, 1, 0) * jumpForce, ForceMode.Impulse); 
+            rb.velocity = (new Vector3(0, 1, 0) * jumpForce);
         }
     }
 
