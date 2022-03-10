@@ -6,18 +6,17 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
 
-    [Header("Physics")]
     public float maxHealth = 10.0f;
     private float health;
+
+    [Header("Physics")]    
     public float jumpForce = 10.0f;
-    
+
     public float speed = 10.0f;
     private float translation;
     private float straffe;
     private Vector3 movement;
     private float smoother;
-
-    private Rigidbody rb;
     
     // player will use its own gravity for jump physics.
     public float gravityScale = 1.0f;
@@ -37,7 +36,8 @@ public class Player : MonoBehaviour
     private Image healthBarFill;
     public Color goodHealth = new Color(69, 255, 137);
     public Color lowHealth = new Color(255, 0, 85);
-
+    
+    private Rigidbody rb;
 
     // Start is called before the first frame update
     void Start()
