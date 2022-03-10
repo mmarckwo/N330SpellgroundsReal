@@ -10,6 +10,8 @@ public class PlayerAttack : MonoBehaviour
     public GameObject attackSpell;
     public float shootSpeed = 700f;
 
+    public ParticleSystem punchEffect;
+
     // 'castSpeed' is spell cooldown in seconds.
     // keep this at the bottom of public variables because of the header
     [Header("ACTUAL COOLDOWN SPEED IS: set value + 0.02.")]

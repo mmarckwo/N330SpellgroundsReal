@@ -2802,6 +2802,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 147685537, guid: 2e8e0c48ea1ac4c4cbb9db0d5271fd9e, type: 3}
+      propertyPath: punchEffect
+      value: 
+      objectReference: {fileID: 4384354183999499710, guid: 30a22caf2fbdaf54ab72d5a4db64f898, type: 3}
     - target: {fileID: 2678046324212233468, guid: 2e8e0c48ea1ac4c4cbb9db0d5271fd9e, type: 3}
       propertyPath: m_Name
       value: Player
