@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     [Header("Physics")]    
     public float jumpForce = 10.0f;
 
+    public float baseSpeed = 10.0f; 
     public float speed = 10.0f;
     private float translation;
     private float straffe;
@@ -54,6 +55,9 @@ public class Player : MonoBehaviour
 
         // set player to be at full HP.
         health = maxHealth;
+
+        // set player to be at base speed.
+        speed = baseSpeed;
     }
 
     void FixedUpdate()
@@ -101,9 +105,13 @@ public class Player : MonoBehaviour
         }
 
         // respawn the player after going below 80 in the world.
+        // reset player stats after falling.
         if(gameObject.transform.position.y <= -80)
         {
             gameObject.transform.position = respawnLocation.transform.position;
+            health = maxHealth;
+            speed = baseSpeed;
+            HealthUpdate();
         }
     }
 
