@@ -25,9 +25,10 @@ public class AttackSpell : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Enemy")
+        if(other.gameObject.tag == "Enemy")
         {
             Debug.Log("hit enemy w/ attack");
+            Instantiate(hitEffect, other.transform.position, Quaternion.identity);
         }
     }
 }

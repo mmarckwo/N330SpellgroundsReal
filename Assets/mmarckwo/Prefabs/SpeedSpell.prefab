@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2428482590820981540}
   - component: {fileID: 38933123795799965}
   - component: {fileID: 1338889478689987232}
-  - component: {fileID: 5733363520703064693}
+  - component: {fileID: 3204289768386186995}
   m_Layer: 0
   m_Name: SpeedSpell
   m_TagString: Untagged
@@ -113,7 +113,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &5733363520703064693
+--- !u!114 &3204289768386186995
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -122,8 +122,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 5265006535068929657}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86873dfd414746041b3832b67b53ac4b, type: 3}
+  m_Script: {fileID: 11500000, guid: eaf1ebbbeb951a64489958283dae7b44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hitEffect: {fileID: 3956909122518959908, guid: 30a22caf2fbdaf54ab72d5a4db64f898, type: 3}
-  spellName: Impulse
+  spellName: Speed

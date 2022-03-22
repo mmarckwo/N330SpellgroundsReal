@@ -14,8 +14,6 @@ public class PlayerAttack : MonoBehaviour
     private int spellSelect = 1;        // default to attack spell.
     private GameObject attack;
 
-    public ParticleSystem punchEffect;
-
     // 'castSpeed' is spell cooldown in seconds.
     // keep this at the bottom of public variables because of the header
     [Header("ACTUAL COOLDOWN SPEED IS: set value + 0.02.")]
