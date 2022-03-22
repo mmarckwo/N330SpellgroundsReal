@@ -7,7 +7,8 @@ public class Player : MonoBehaviour
 {
 
     public float maxHealth = 10.0f;
-    private float health;
+    [Header("Do not change this")]
+    public float health;
 
     [Header("Physics")]    
     public float jumpForce = 10.0f;
@@ -94,8 +95,9 @@ public class Player : MonoBehaviour
         // jump button. only jump when the player is touching the ground.
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
-            //rb.AddForce(new Vector3(0, 1, 0) * jumpForce, ForceMode.Impulse); 
-            rb.velocity = (new Vector3(0, 1, 0) * jumpForce);
+            // player cannot cancel impulse attack by using addforce. (good thing)
+            rb.AddForce(new Vector3(0, 1, 0) * jumpForce, ForceMode.Impulse); 
+            //rb.velocity = (new Vector3(0, 1, 0) * jumpForce);
         }
 
         // respawn the player after going below 80 in the world.
@@ -105,13 +107,11 @@ public class Player : MonoBehaviour
         }
     }
 
-    void HealthUp()
+    // update health bar UI.
+    public void HealthUpdate()
     {
-        // restore HP by some randomly decided value. 
-        health += 4.2f;
-
         // clamp health to not go above max HP. 
-        if(health > maxHealth)
+        if (health > maxHealth)
         {
             health = maxHealth;
         }
@@ -121,25 +121,11 @@ public class Player : MonoBehaviour
             healthBarFill.color = goodHealth;
         }
 
-        // update health bar fill amount.
-        healthBarFill.fillAmount = health / maxHealth;
-
-        Debug.Log(health);
-    }
-
-    void HealthDown()
-    {
-        // decrease health by arbitrarily decided value.
-        health -= 1.2f;
-
         // clamp health to not go below 0. 
         if (health < 0)
         {
             health = 0;
         }
-
-        // update health bar fill amount.
-        healthBarFill.fillAmount = health / maxHealth;
 
         // make the health bar red when the player is at low HP.
         if ((health / maxHealth <= .30) || (health == 1))
@@ -152,6 +138,23 @@ public class Player : MonoBehaviour
             Debug.Log("DEAD");
         }
 
+        // update health bar fill amount.
+        healthBarFill.fillAmount = health / maxHealth;
         Debug.Log(health);
+    }
+
+    void HealthUp()
+    {
+        // restore HP by some randomly decided value. 
+        health += 40.2f;
+        HealthUpdate();
+
+    }
+
+    void HealthDown()
+    {
+        // decrease health by arbitrarily decided value.
+        health -= 15.2f;
+        HealthUpdate();
     }
 }

@@ -29,6 +29,10 @@ public class AttackSpell : MonoBehaviour
         {
             Debug.Log("hit enemy w/ attack");
             Instantiate(hitEffect, other.transform.position, Quaternion.identity);
+
+            // will need to replace PLAYER script component with an ENEMY script component for the other player. 
+            other.gameObject.GetComponent<Player>().health -= 14.5f;
+            other.gameObject.GetComponent<Player>().HealthUpdate();
         }
     }
 }

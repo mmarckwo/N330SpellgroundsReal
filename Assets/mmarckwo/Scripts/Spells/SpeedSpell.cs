@@ -29,6 +29,10 @@ public class SpeedSpell : MonoBehaviour
         {
             Debug.Log("hit enemy w/ speed");
             Instantiate(hitEffect, other.transform.position, Quaternion.identity);
+
+            // will need to replace player script with an enemy script for the other player. 
+            // increase the enemy's speed.
+            other.gameObject.GetComponent<Player>().speed += 2.5f; 
         }
     }
 

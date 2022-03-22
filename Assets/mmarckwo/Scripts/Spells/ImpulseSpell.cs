@@ -8,6 +8,8 @@ public class ImpulseSpell : MonoBehaviour
     public GameObject hitEffect;
     public string spellName = "Impulse";
 
+    private Vector3 force;
+
     private float timer = 0.0f;
     private float destroyTime = 1.0f;
     
@@ -29,6 +31,11 @@ public class ImpulseSpell : MonoBehaviour
         {
             Debug.Log("hit enemy w/ impulse");
             Instantiate(hitEffect, other.transform.position, Quaternion.identity);
+
+            force = new Vector3(0, 0, 45);
+
+            // will need to replace player script with an enemy script for the other player. 
+            other.GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
         }
     }
 
