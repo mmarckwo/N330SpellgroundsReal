@@ -8,7 +8,11 @@ public class PlayerAttack : MonoBehaviour
     public MouseCamLook playerCam;
 
     public GameObject attackSpell;
+    public GameObject impulseSpell;
+    public GameObject speedSpell;
     public float shootSpeed = 700f;
+    private int spellSelect = 1;        // default to attack spell.
+    private GameObject attack;
 
     public ParticleSystem punchEffect;
 
@@ -29,6 +33,22 @@ public class PlayerAttack : MonoBehaviour
     void Update()
     {
 
+        // check for when the player switches spells.
+        if (Input.GetKeyDown("1"))
+        {
+            spellSelect = 1;
+        }
+
+        if (Input.GetKeyDown("2"))
+        {
+            spellSelect = 2;
+        }
+
+        if (Input.GetKeyDown("3"))
+        {
+            spellSelect = 3;
+        }
+
         // when the player clicks and they're not on cooldown.
         if (Input.GetButtonDown("Fire1") && !onCooldown)
         {
@@ -36,11 +56,31 @@ public class PlayerAttack : MonoBehaviour
             timer = 0.0f;
             onCooldown = true;
 
-            // need to get spell type variable when more spells are added.
-
+            // switch statement that shoots whatever spell the player has selected.
             // instantiate rotation arg combines player rotation and camera pitch.
-            GameObject attack = Instantiate(attackSpell, transform.position, (transform.rotation * playerCam.lookAngle));
-            attack.GetComponent<Rigidbody>().AddRelativeForce(0, 0, shootSpeed);
+            switch(spellSelect)
+            {
+                case 1:
+                    Debug.Log("attack");
+                    attack = Instantiate(attackSpell, transform.position, (transform.rotation * playerCam.lookAngle));
+                    attack.GetComponent<Rigidbody>().AddRelativeForce(0, 0, shootSpeed);
+                    break;
+                case 2:
+                    Debug.Log("impulse");
+                    attack = Instantiate(impulseSpell, transform.position, (transform.rotation * playerCam.lookAngle));
+                    attack.GetComponent<Rigidbody>().AddRelativeForce(0, 0, shootSpeed);
+                    break;
+                case 3:
+                    Debug.Log("speed");
+                    attack = Instantiate(speedSpell, transform.position, (transform.rotation * playerCam.lookAngle));
+                    attack.GetComponent<Rigidbody>().AddRelativeForce(0, 0, shootSpeed);
+                    break;
+                default:
+                    Debug.Log("default");
+                    attack = Instantiate(attackSpell, transform.position, (transform.rotation * playerCam.lookAngle));
+                    attack.GetComponent<Rigidbody>().AddRelativeForce(0, 0, shootSpeed);
+                    break;
+            }
 
         }
 
