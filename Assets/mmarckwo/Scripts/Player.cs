@@ -41,6 +41,10 @@ public class Player : MonoBehaviour
     
     private Rigidbody rb;
 
+    // score for the game, get to three to win.
+    private int score = 0;
+    private int enemyScore = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -105,14 +109,32 @@ public class Player : MonoBehaviour
         }
 
         // respawn the player after going below 80 in the world.
-        // reset player stats after falling.
         if(gameObject.transform.position.y <= -80)
         {
-            gameObject.transform.position = respawnLocation.transform.position;
-            health = maxHealth;
-            speed = baseSpeed;
-            HealthUpdate();
-            rb.velocity = new Vector3(0, globalGravity, 0);
+            Respawn();
+        }
+    }
+    
+    // reset player stats and position after falling or dying.
+    void Respawn()
+    {
+        gameObject.transform.position = respawnLocation.transform.position;
+        health = maxHealth;
+        speed = baseSpeed;
+        HealthUpdate();
+        rb.velocity = new Vector3(0, globalGravity, 0);
+
+        if (gameObject.tag == "Enemy")
+        {
+            Debug.Log("enemy perished");
+            score += 1;
+            Debug.Log("Player score: " + score);
+        }
+        else if (gameObject.tag == "Player")
+        {
+            Debug.Log("player perished");
+            enemyScore += 1;
+            Debug.Log("Enemy score: " + enemyScore);
         }
     }
 
@@ -141,10 +163,11 @@ public class Player : MonoBehaviour
         {
             healthBarFill.color = lowHealth;
         }
-        // when the player dies.
+
+        // respawn when dead.
         if (health == 0)
-        {
-            Debug.Log("DEAD");
+        {            
+            Respawn();
         }
 
         // update health bar fill amount.
