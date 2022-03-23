@@ -7,7 +7,7 @@ public class ImpulseSpell : MonoBehaviour
 
     public GameObject hitEffect;
     public string spellName = "Impulse";
-    public float forceStr = 45;
+    public float forceStrength = 45;
 
     private Vector3 force;
 
@@ -34,7 +34,7 @@ public class ImpulseSpell : MonoBehaviour
             Instantiate(hitEffect, other.transform.position, Quaternion.identity);
 
             // get direction spell is facing (angle player shot it at), multiply by impulse force.
-            force = transform.forward * forceStr;
+            force = transform.forward * forceStrength;
 
             // will need to replace player script with an enemy script for the other player. 
             other.GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);

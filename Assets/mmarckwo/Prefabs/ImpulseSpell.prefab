@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d2a4aa3b5671157429eb30bf1573fed5, type: 2}
+  - {fileID: 2100000, guid: 0547dab76120e0346b4609f3620a379a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -127,3 +127,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitEffect: {fileID: 3956909122518959908, guid: 30a22caf2fbdaf54ab72d5a4db64f898, type: 3}
   spellName: Impulse
+  forceStrength: 45
