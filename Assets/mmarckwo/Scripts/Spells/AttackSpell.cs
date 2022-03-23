@@ -33,6 +33,9 @@ public class AttackSpell : MonoBehaviour
             // will need to replace PLAYER script component with an ENEMY script component for the other player. 
             other.gameObject.GetComponent<Player>().health -= 14.5f;
             other.gameObject.GetComponent<Player>().HealthUpdate();
+
+            // destroy self when the spell hits the enemy.
+            Destroy(this.gameObject);
         }
     }
 }

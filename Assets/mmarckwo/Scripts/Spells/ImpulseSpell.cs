@@ -7,12 +7,13 @@ public class ImpulseSpell : MonoBehaviour
 
     public GameObject hitEffect;
     public string spellName = "Impulse";
+    public float forceStr = 45;
 
     private Vector3 force;
 
     private float timer = 0.0f;
     private float destroyTime = 1.0f;
-    
+
     void FixedUpdate()
     {
         timer += Time.deltaTime;
@@ -32,10 +33,14 @@ public class ImpulseSpell : MonoBehaviour
             Debug.Log("hit enemy w/ impulse");
             Instantiate(hitEffect, other.transform.position, Quaternion.identity);
 
-            force = new Vector3(0, 0, 45);
+            // get direction spell is facing (angle player shot it at), multiply by impulse force.
+            force = transform.forward * forceStr;
 
             // will need to replace player script with an enemy script for the other player. 
             other.GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
+
+            // destroy self when the spell hits the enemy.
+            Destroy(this.gameObject);
         }
     }
 

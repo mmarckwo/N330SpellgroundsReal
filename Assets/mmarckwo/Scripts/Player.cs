@@ -112,6 +112,7 @@ public class Player : MonoBehaviour
             health = maxHealth;
             speed = baseSpeed;
             HealthUpdate();
+            rb.velocity = new Vector3(0, globalGravity, 0);
         }
     }
 

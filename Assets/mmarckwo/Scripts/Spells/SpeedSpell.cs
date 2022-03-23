@@ -32,7 +32,10 @@ public class SpeedSpell : MonoBehaviour
 
             // will need to replace player script with an enemy script for the other player. 
             // increase the enemy's speed.
-            other.gameObject.GetComponent<Player>().speed += 2.5f; 
+            other.gameObject.GetComponent<Player>().speed += 2.5f;
+
+            // destroy self when the spell hits the enemy.
+            Destroy(this.gameObject);
         }
     }
 
