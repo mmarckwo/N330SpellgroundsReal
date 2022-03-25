@@ -8,9 +8,11 @@ public class AttackSpell : MonoBehaviour
     public GameObject hitEffect;
     public string spellName = "Attack";
 
+    public AudioClip attackHit;
+
     private float timer = 0.0f;
     private float destroyTime = 1.0f;
-    
+
     void FixedUpdate()
     {
         timer += Time.deltaTime;
@@ -29,6 +31,7 @@ public class AttackSpell : MonoBehaviour
         {
             Debug.Log("hit enemy w/ attack");
             Instantiate(hitEffect, other.transform.position, Quaternion.identity);
+            AudioSource.PlayClipAtPoint(attackHit, gameObject.transform.position);
 
             // will need to replace PLAYER script component with an ENEMY script component for the other player. 
             other.gameObject.GetComponent<Player>().health -= 14.5f;

@@ -9,6 +9,8 @@ public class ImpulseSpell : MonoBehaviour
     public string spellName = "Impulse";
     public float forceStrength = 45;
 
+    public AudioClip impulseHit;
+
     private Vector3 force;
 
     private float timer = 0.0f;
@@ -32,6 +34,7 @@ public class ImpulseSpell : MonoBehaviour
         {
             Debug.Log("hit enemy w/ impulse");
             Instantiate(hitEffect, other.transform.position, Quaternion.identity);
+            AudioSource.PlayClipAtPoint(impulseHit, gameObject.transform.position);
 
             // get direction spell is facing (angle player shot it at), multiply by impulse force.
             force = transform.forward * forceStrength;
