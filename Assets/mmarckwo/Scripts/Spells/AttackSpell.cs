@@ -29,7 +29,6 @@ public class AttackSpell : MonoBehaviour
     {
         if(other.gameObject.tag == "Enemy")
         {
-            Debug.Log("hit enemy w/ attack");
             Instantiate(hitEffect, other.transform.position, Quaternion.identity);
             AudioSource.PlayClipAtPoint(attackHit, gameObject.transform.position);
 

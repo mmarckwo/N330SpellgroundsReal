@@ -29,7 +29,6 @@ public class SpeedSpell : MonoBehaviour
     {
         if(other.gameObject.tag == "Enemy")
         {
-            Debug.Log("hit enemy w/ speed");
             Instantiate(hitEffect, other.transform.position, Quaternion.identity);
             AudioSource.PlayClipAtPoint(speedHit, gameObject.transform.position);
 

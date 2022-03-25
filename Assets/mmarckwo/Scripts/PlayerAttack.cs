@@ -65,25 +65,22 @@ public class PlayerAttack : MonoBehaviour
             switch(spellSelect)
             {
                 case 1:
-                    Debug.Log("attack");
                     attack = Instantiate(attackSpell, transform.position, (transform.rotation * playerCam.lookAngle));
                     attackSound.Play();
                     attack.GetComponent<Rigidbody>().AddRelativeForce(0, 0, shootSpeed);
                     break;
                 case 2:
-                    Debug.Log("impulse");
                     attack = Instantiate(impulseSpell, transform.position, (transform.rotation * playerCam.lookAngle));
                     impulseSound.Play();
                     attack.GetComponent<Rigidbody>().AddRelativeForce(0, 0, shootSpeed);
                     break;
                 case 3:
-                    Debug.Log("speed");
                     attack = Instantiate(speedSpell, transform.position, (transform.rotation * playerCam.lookAngle));
                     speedSound.Play();
                     attack.GetComponent<Rigidbody>().AddRelativeForce(0, 0, shootSpeed);
                     break;
                 default:
-                    Debug.Log("default");
+                    Debug.Log("default attack");
                     attack = Instantiate(attackSpell, transform.position, (transform.rotation * playerCam.lookAngle));
                     attackSound.Play();
                     attack.GetComponent<Rigidbody>().AddRelativeForce(0, 0, shootSpeed);

@@ -32,7 +32,6 @@ public class ImpulseSpell : MonoBehaviour
     {
         if(other.gameObject.tag == "Enemy")
         {
-            Debug.Log("hit enemy w/ impulse");
             Instantiate(hitEffect, other.transform.position, Quaternion.identity);
             AudioSource.PlayClipAtPoint(impulseHit, gameObject.transform.position);
 

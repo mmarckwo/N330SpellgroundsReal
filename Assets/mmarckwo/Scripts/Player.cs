@@ -184,7 +184,6 @@ public class Player : MonoBehaviour
 
         // update health bar fill amount.
         healthBarFill.fillAmount = health / maxHealth;
-        Debug.Log(health);
     }
 
     void HealthUp()
