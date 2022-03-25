@@ -5,13 +5,13 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
 
-public class Launcher : MonoBehaviourPunCallbacks 
+public class Launcher : MonoBehaviourPunCallbacks
 {
     public int playerConnected = 0;
     public Text txtNumConnected;
     public GameObject playerPrefab;
 
-    public void Connect() 
+    public void Connect()
     {
         //first outreach
         PhotonNetwork.ConnectUsingSettings();
@@ -77,6 +77,21 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public void SwapScene()
     {
-        PhotonNetwork.LoadLevel("GameScene");
+        PhotonNetwork.LoadLevel("arena1");
+    }
+    public void StartGame2()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            ExitGames.Client.Photon.Hashtable setValue = new ExitGames.Client.Photon.Hashtable();
+            setValue.Add("monster", true);
+            PhotonNetwork.PlayerList[0].SetCustomProperties(setValue);
+            Invoke("SwapScene2", 5f);
+        }
+    }
+
+    public void SwapScene2()
+    {
+        PhotonNetwork.LoadLevel("arena2");
     }
 }
