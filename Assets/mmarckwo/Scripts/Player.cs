@@ -38,7 +38,11 @@ public class Player : MonoBehaviour
     private Image healthBarFill;
     public Color goodHealth = new Color(69, 255, 137);
     public Color lowHealth = new Color(255, 0, 85);
-    
+
+    [Header("HP Sounds")]
+    public AudioSource hpRestore;
+    public AudioSource hpDrain;
+
     private Rigidbody rb;
 
     // score for the game, get to three to win.
@@ -177,6 +181,8 @@ public class Player : MonoBehaviour
 
     void HealthUp()
     {
+        hpRestore.Play();
+
         // restore HP by some randomly decided value. 
         health += 40.2f;
         HealthUpdate();
@@ -185,6 +191,8 @@ public class Player : MonoBehaviour
 
     void HealthDown()
     {
+        hpDrain.Play();
+
         // decrease health by arbitrarily decided value.
         health -= 15.2f;
         HealthUpdate();

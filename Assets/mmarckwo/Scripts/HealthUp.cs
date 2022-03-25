@@ -7,6 +7,7 @@ public class HealthUp : MonoBehaviour
 
     // on collide increase player health.
     // repeat same thing for other powerups.
+
     void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == "Player")
