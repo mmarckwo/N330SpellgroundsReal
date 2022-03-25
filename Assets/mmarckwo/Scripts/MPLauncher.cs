@@ -79,7 +79,18 @@ public class MPLauncher : MonoBehaviourPunCallbacks
     public void SwapScene()
     {
         // swtich to stage select.
-        //PhotonNetwork.LoadLevel("GameScene");
-        Debug.Log("scene swap here");
+        PhotonNetwork.LoadLevel("LevelSelect");
+    }
+
+    public void LoadSkyArena()
+    {
+        // swtich to sky arena.
+        PhotonNetwork.LoadLevel("arena1");
+    }
+
+    public void LoadCastle()
+    {
+        // swtich to castle level.
+        PhotonNetwork.LoadLevel("arena2");
     }
 }
