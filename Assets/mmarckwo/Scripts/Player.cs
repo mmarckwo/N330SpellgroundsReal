@@ -24,11 +24,12 @@ public class Player : MonoBehaviour
     public float gravityScale = 1.0f;
     public static float globalGravity = -9.81f;
 
-    [Header("Jump Checking")]
+    [Header("Jump Checking & Sound")]
     public Transform groundCheck;
     public float groundDistance = .4f;
     public LayerMask groundMask;
     private bool isGrounded;
+    public AudioSource jumpSound;
 
     [Header("Respawner")]
     public Transform respawnLocation;
@@ -107,9 +108,7 @@ public class Player : MonoBehaviour
         // jump button. only jump when the player is touching the ground.
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
-            // player cannot cancel impulse attack by using addforce. (good thing)
-            rb.AddForce(new Vector3(0, 1, 0) * jumpForce, ForceMode.Impulse); 
-            //rb.velocity = (new Vector3(0, 1, 0) * jumpForce);
+            Jump();
         }
 
         // respawn the player after going below 80 in the world.
@@ -118,7 +117,16 @@ public class Player : MonoBehaviour
             Respawn();
         }
     }
-    
+
+    void Jump()
+    {
+        // play jump sound;
+        jumpSound.Play();
+        // player cannot cancel impulse attack by using addforce. (good thing)
+        rb.AddForce(new Vector3(0, 1, 0) * jumpForce, ForceMode.Impulse);
+        //rb.velocity = (new Vector3(0, 1, 0) * jumpForce);
+    }
+
     // reset player stats and position after falling or dying.
     void Respawn()
     {
