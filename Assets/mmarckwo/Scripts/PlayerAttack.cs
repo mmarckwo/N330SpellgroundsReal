@@ -7,12 +7,18 @@ public class PlayerAttack : MonoBehaviour
     // access mouse cam script to get camera pitch.
     public MouseCamLook playerCam;
 
+    [Header("Magic Attacks")]
     public GameObject attackSpell;
     public GameObject impulseSpell;
     public GameObject speedSpell;
     public float shootSpeed = 700f;
     private int spellSelect = 1;        // default to attack spell.
     private GameObject attack;
+
+    [Header("Sounds")]
+    public AudioSource attackSound;
+    public AudioSource impulseSound;
+    public AudioSource speedSound; 
 
     // 'castSpeed' is spell cooldown in seconds.
     // keep this at the bottom of public variables because of the header
@@ -61,21 +67,25 @@ public class PlayerAttack : MonoBehaviour
                 case 1:
                     Debug.Log("attack");
                     attack = Instantiate(attackSpell, transform.position, (transform.rotation * playerCam.lookAngle));
+                    attackSound.Play();
                     attack.GetComponent<Rigidbody>().AddRelativeForce(0, 0, shootSpeed);
                     break;
                 case 2:
                     Debug.Log("impulse");
                     attack = Instantiate(impulseSpell, transform.position, (transform.rotation * playerCam.lookAngle));
+                    impulseSound.Play();
                     attack.GetComponent<Rigidbody>().AddRelativeForce(0, 0, shootSpeed);
                     break;
                 case 3:
                     Debug.Log("speed");
                     attack = Instantiate(speedSpell, transform.position, (transform.rotation * playerCam.lookAngle));
+                    speedSound.Play();
                     attack.GetComponent<Rigidbody>().AddRelativeForce(0, 0, shootSpeed);
                     break;
                 default:
                     Debug.Log("default");
                     attack = Instantiate(attackSpell, transform.position, (transform.rotation * playerCam.lookAngle));
+                    attackSound.Play();
                     attack.GetComponent<Rigidbody>().AddRelativeForce(0, 0, shootSpeed);
                     break;
             }
