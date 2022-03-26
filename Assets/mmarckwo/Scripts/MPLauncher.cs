@@ -50,9 +50,9 @@ public class MPLauncher : MonoBehaviourPunCallbacks
         //p.name = "ClientPlayer";
         PhotonNetwork.SetMasterClient(PhotonNetwork.PlayerList[0]);
 
-        //ExitGames.Client.Photon.Hashtable setValue = new ExitGames.Client.Photon.Hashtable();
-        //setValue.Add("monster", false);
-        //PhotonNetwork.LocalPlayer.SetCustomProperties(setValue);
+        ExitGames.Client.Photon.Hashtable setValue = new ExitGames.Client.Photon.Hashtable();
+        setValue.Add("enemy", false);
+        PhotonNetwork.LocalPlayer.SetCustomProperties(setValue);
 
         PhotonNetwork.AutomaticallySyncScene = true;
     }
@@ -70,7 +70,7 @@ public class MPLauncher : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             ExitGames.Client.Photon.Hashtable setValue = new ExitGames.Client.Photon.Hashtable();
-            setValue.Add("monster", true);
+            setValue.Add("enemy", true);
             PhotonNetwork.PlayerList[0].SetCustomProperties(setValue);
             Invoke("SwapScene", 5f);
         }
