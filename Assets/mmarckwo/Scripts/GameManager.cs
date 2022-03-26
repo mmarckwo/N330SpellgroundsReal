@@ -23,14 +23,14 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsMasterClient)
         {
-            Debug.Log("you are the master client.");
+            Debug.Log("You are the master client.");
             player = PhotonNetwork.Instantiate(this.playerPrefab.name, p1Spawn.transform.position, Quaternion.identity);
             player.name = "ClientPlayer";
             player.tag = "Player";
         } 
         else
         {
-            Debug.Log("you are not the master client.");
+            Debug.Log("You are not the master client.");
             player = PhotonNetwork.Instantiate(this.playerPrefab.name, p2Spawn.transform.position, Quaternion.identity);
             player.name = "EnemyPlayer";
             player.tag = "Player";

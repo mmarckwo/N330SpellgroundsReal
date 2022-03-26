@@ -6,7 +6,7 @@ using Photon.Pun;
 public class SpeedSpell : MonoBehaviourPun
 {
 
-    public GameObject hitEffect;
+    private string hitEffect = "punch_effect";
     public string spellName = "Speed";
 
     public AudioClip speedHit;
@@ -31,16 +31,21 @@ public class SpeedSpell : MonoBehaviourPun
         if (!this.photonView.IsMine) return;
         if (other.gameObject.tag == "Enemy")
         {
-            Instantiate(hitEffect, other.transform.position, Quaternion.identity);
-            AudioSource.PlayClipAtPoint(speedHit, gameObject.transform.position);
+            PhotonNetwork.Instantiate(hitEffect, other.transform.position, Quaternion.identity);
 
             // will need to replace player script with an enemy script for the other player. 
             // increase the enemy's speed.
             other.gameObject.GetComponent<Player>().speed += 2.5f;
 
-            // destroy self when the spell hits the enemy.
-            Destroy(this.gameObject);
+            // destroy self and play sound when the spell hits the enemy.
+            this.photonView.RPC("DestroySpellByHit", RpcTarget.All);
         }
     }
 
+    [PunRPC]
+    void DestroySpellByHit()
+    {
+        AudioSource.PlayClipAtPoint(speedHit, gameObject.transform.position);
+        Destroy(this.gameObject);
+    }
 }

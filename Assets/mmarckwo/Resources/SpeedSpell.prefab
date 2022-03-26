@@ -127,7 +127,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaf1ebbbeb951a64489958283dae7b44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitEffect: {fileID: 3956909122518959908, guid: 30a22caf2fbdaf54ab72d5a4db64f898, type: 3}
   spellName: Speed
   speedHit: {fileID: 8300000, guid: f94291e0f1d7d0440be0f796086899f9, type: 3}
 --- !u!114 &1816357494357985648

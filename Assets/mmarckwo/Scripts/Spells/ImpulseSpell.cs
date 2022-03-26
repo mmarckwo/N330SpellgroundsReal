@@ -6,7 +6,7 @@ using Photon.Pun;
 public class ImpulseSpell : MonoBehaviourPun
 {
 
-    public GameObject hitEffect;
+    private string hitEffect = "punch_effect";
     public string spellName = "Impulse";
     public float forceStrength = 45;
 
@@ -34,8 +34,7 @@ public class ImpulseSpell : MonoBehaviourPun
         if (!this.photonView.IsMine) return;
         if (other.gameObject.tag == "Enemy")
         {
-            Instantiate(hitEffect, other.transform.position, Quaternion.identity);
-            AudioSource.PlayClipAtPoint(impulseHit, gameObject.transform.position);
+            PhotonNetwork.Instantiate(hitEffect, other.transform.position, Quaternion.identity);
 
             // get direction spell is facing (angle player shot it at), multiply by impulse force.
             force = transform.forward * forceStrength;
@@ -43,9 +42,15 @@ public class ImpulseSpell : MonoBehaviourPun
             // will need to replace player script with an enemy script for the other player. 
             other.GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
 
-            // destroy self when the spell hits the enemy.
-            Destroy(this.gameObject);
+            // destroy self and play sound when the spell hits the enemy.
+            this.photonView.RPC("DestroySpellByHit", RpcTarget.All);
         }
     }
 
+    [PunRPC]
+    void DestroySpellByHit()
+    {
+        AudioSource.PlayClipAtPoint(impulseHit, gameObject.transform.position);
+        Destroy(this.gameObject);
+    }
 }
