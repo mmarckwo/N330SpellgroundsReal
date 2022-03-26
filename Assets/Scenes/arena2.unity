@@ -978,6 +978,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1125137364}
     m_Modifications:
+    - target: {fileID: -6213126770284274844, guid: 9ff03fe045536e54cafc07909447d7ee, type: 3}
+      propertyPath: sceneViewId
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 713634388821372845, guid: 9ff03fe045536e54cafc07909447d7ee, type: 3}
       propertyPath: m_Name
       value: Score Counter

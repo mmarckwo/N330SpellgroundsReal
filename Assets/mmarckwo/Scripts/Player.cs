@@ -193,8 +193,14 @@ public class Player : MonoBehaviourPunCallbacks
             Debug.Log("Enemy score: " + enemyScore);
         }
 
+        UpdateCounter();
+    }
+
+    void UpdateCounter()
+    {
         // update score on screen.
-        //scoreText.SetText(score + " - " + enemyScore);
+        // crashes idk why.
+        scoreText.SetText(score + " - " + enemyScore);
 
         if (score == 3)
         {
