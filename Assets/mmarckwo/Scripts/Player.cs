@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviourPunCallbacks
 {
 
     public float maxHealth = 10.0f;
@@ -54,6 +55,8 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (!this.photonView.IsMine) return;
+
         Cursor.lockState = CursorLockMode.Locked;
 
         // find respawn location in scene hierarchy, set respawn location to transform of object.
@@ -78,6 +81,8 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (!this.photonView.IsMine) return;
+
         // gravity.
         Vector3 gravity = globalGravity * gravityScale * Vector3.up;
         rb.AddForce(gravity, ForceMode.Acceleration);
@@ -99,6 +104,8 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        if (!this.photonView.IsMine) return;
+
         // free cursor with ESC.
         if (Input.GetKeyDown("escape"))
         {
@@ -127,6 +134,7 @@ public class Player : MonoBehaviour
 
     void Jump()
     {
+        if (!this.photonView.IsMine) return;
         // play jump sound;
         jumpSound.Play();
         // player cannot cancel impulse attack by using addforce. (good thing)
@@ -137,6 +145,7 @@ public class Player : MonoBehaviour
     // reset player stats and position after falling or dying.
     void Respawn()
     {
+        if (!this.photonView.IsMine) return;
         gameObject.transform.position = respawnLocation.transform.position;
         health = maxHealth;
         speed = baseSpeed;
@@ -160,6 +169,7 @@ public class Player : MonoBehaviour
     // update health bar UI.
     public void HealthUpdate()
     {
+        if (!this.photonView.IsMine) return;
         // clamp health to not go above max HP. 
         if (health > maxHealth)
         {
@@ -195,6 +205,7 @@ public class Player : MonoBehaviour
 
     void HealthUp()
     {
+        if (!this.photonView.IsMine) return;
         hpRestore.Play();
 
         // restore HP by some randomly decided value. 
@@ -205,6 +216,7 @@ public class Player : MonoBehaviour
 
     void HealthDown()
     {
+        if (!this.photonView.IsMine) return;
         hpDrain.Play();
 
         // decrease health by arbitrarily decided value.

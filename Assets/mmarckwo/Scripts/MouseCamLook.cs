@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class MouseCamLook : MonoBehaviour
+public class MouseCamLook : MonoBehaviourPun
 {
     [SerializeField]
     public float sensitivity = 5.0f;
@@ -21,6 +22,8 @@ public class MouseCamLook : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        if (!this.photonView.IsMine) return;
+        this.GetComponent<Camera>().enabled = true;
         character = this.transform.parent.gameObject;
     }
 
