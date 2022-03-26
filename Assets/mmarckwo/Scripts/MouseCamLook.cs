@@ -22,8 +22,12 @@ public class MouseCamLook : MonoBehaviourPun
     // Use this for initialization
     void Start()
     {
-        if (!this.photonView.IsMine) return;
+
         this.GetComponent<Camera>().enabled = true;
+        if (!this.photonView.IsMine)
+        {
+            this.GetComponent<Camera>().enabled = false;
+        }
         character = this.transform.parent.gameObject;
     }
 

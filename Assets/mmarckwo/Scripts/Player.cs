@@ -55,7 +55,11 @@ public class Player : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-        if (!this.photonView.IsMine) return;
+        if (!this.photonView.IsMine)
+        {
+            this.GetComponentInChildren<AudioListener>().enabled = false;
+            return;
+        }
 
         Cursor.lockState = CursorLockMode.Locked;
 
