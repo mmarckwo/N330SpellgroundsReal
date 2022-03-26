@@ -2135,6 +2135,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 2678046324212233468, guid: 7ad0318b686feb54bb3c6bb705b25978, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3590282661756672767, guid: 7ad0318b686feb54bb3c6bb705b25978, type: 3}
       propertyPath: sceneViewId
       value: 1

@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 {
 
     public GameObject playerPrefab;
+    public GameObject enemyPrefab;
     private GameObject p1Spawn;
     private GameObject p2Spawn;
 
@@ -24,12 +25,13 @@ public class GameManager : MonoBehaviour
             GameObject p = null;
             p = PhotonNetwork.Instantiate(this.playerPrefab.name, p1Spawn.transform.position, Quaternion.identity);
             p.name = "ClientPlayer";
+        } 
+        else
+        {
+            Debug.Log("you are not the master client.");
+            GameObject p = null;
+            p = PhotonNetwork.Instantiate(this.enemyPrefab.name, p2Spawn.transform.position, Quaternion.identity);
+            p.name = "EnemyPlayer";
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
