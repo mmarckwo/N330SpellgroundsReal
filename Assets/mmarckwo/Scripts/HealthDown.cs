@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class HealthDown : MonoBehaviour
+public class HealthDown : MonoBehaviourPun
 {
 
     // on collide increase player health.
@@ -12,8 +13,15 @@ public class HealthDown : MonoBehaviour
     {
         if(other.gameObject.tag == "Player")
         {
-            Destroy(this.transform.parent.gameObject);
             other.SendMessage("HealthDown");
+            this.photonView.RPC("DestroyItem", RpcTarget.All);
+            
         }
+    }
+
+    [PunRPC]
+    void DestroyItem()
+    {
+        Destroy(this.transform.parent.gameObject);
     }
 }
