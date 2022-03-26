@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -14,6 +15,11 @@ public class PlayerAttack : MonoBehaviour
     public float shootSpeed = 700f;
     private int spellSelect = 1;        // default to attack spell.
     private GameObject attack;
+
+    [Header("Spell indicator icons")]
+    public TextMeshProUGUI attackIndicator;
+    public TextMeshProUGUI impulseIndicator;
+    public TextMeshProUGUI speedIndicator;
 
     [Header("Sounds")]
     public AudioSource attackSound;
@@ -37,20 +43,29 @@ public class PlayerAttack : MonoBehaviour
     void Update()
     {
 
-        // check for when the player switches spells.
+        // check for when the player switches spells and set the indicators on the icons to bold & italic.
         if (Input.GetKeyDown("1"))
         {
             spellSelect = 1;
+            attackIndicator.fontStyle = FontStyles.Bold | FontStyles.Italic;
+            impulseIndicator.fontStyle = FontStyles.Normal;
+            speedIndicator.fontStyle = FontStyles.Normal;
         }
 
         if (Input.GetKeyDown("2"))
         {
             spellSelect = 2;
+            attackIndicator.fontStyle = FontStyles.Normal;
+            impulseIndicator.fontStyle = FontStyles.Bold | FontStyles.Italic;
+            speedIndicator.fontStyle = FontStyles.Normal;
         }
 
         if (Input.GetKeyDown("3"))
         {
             spellSelect = 3;
+            attackIndicator.fontStyle = FontStyles.Normal;
+            impulseIndicator.fontStyle = FontStyles.Normal;
+            speedIndicator.fontStyle = FontStyles.Bold | FontStyles.Italic;
         }
 
         // when the player clicks and they're not on cooldown.
