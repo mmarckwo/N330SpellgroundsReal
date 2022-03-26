@@ -207,7 +207,7 @@ public class Player : MonoBehaviourPunCallbacks
         }
     }
 
-    [PunRPC]
+    //[PunRPC]
     // update health bar UI.
     public void HealthUpdate()
     {
@@ -272,8 +272,8 @@ public class Player : MonoBehaviourPunCallbacks
 
         // decrease health by arbitrarily decided value.
         health -= 15.2f;
-        this.photonView.RPC("HealthUpdate", RpcTarget.All);
-        //HealthUpdate();
+        //this.photonView.RPC("HealthUpdate", RpcTarget.All);
+        HealthUpdate();
     }
     
     public void AttackHit()
@@ -286,7 +286,7 @@ public class Player : MonoBehaviourPunCallbacks
     {
         if (!this.photonView.IsMine) return;
         health -= 14.5f;
-        // rpc???
+        // rpc??? NO.
         HealthUpdate();
     }
 
