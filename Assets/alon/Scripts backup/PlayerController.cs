@@ -121,7 +121,7 @@ public class PlayerController : MonoBehaviourPun
         controller.Move(move * speed * Time.deltaTime);
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity);
-        
+
         if(isMonster == false)
         {
             speed = 5;

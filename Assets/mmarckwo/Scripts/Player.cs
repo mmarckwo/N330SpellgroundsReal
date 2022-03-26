@@ -12,16 +12,16 @@ public class Player : MonoBehaviourPunCallbacks
     [Header("Do not change this")]
     public float health;
 
-    [Header("Physics")]    
+    [Header("Physics")]
     public float jumpForce = 10.0f;
 
-    public float baseSpeed = 10.0f; 
+    public float baseSpeed = 10.0f;
     public float speed = 10.0f;
     private float translation;
     private float straffe;
     private Vector3 movement;
     private float smoother;
-    
+
     // player will use its own gravity for jump physics.
     public float gravityScale = 1.0f;
     public static float globalGravity = -9.81f;
@@ -63,7 +63,13 @@ public class Player : MonoBehaviourPunCallbacks
 
     // Start is called before the first frame update
     void Start()
+
     {
+      gameManagerObject = GameObject.Find("In-game Manager");
+      gameManager = gameManagerObject.GetComponent<GameManager>();
+      scoreTextObject = GameObject.Find("Canvas/Score Counter");
+      scoreText = scoreTextObject.GetComponent<TextMeshProUGUI>();
+
         if (!this.photonView.IsMine)
         {
             this.GetComponentInChildren<AudioListener>().enabled = false;
@@ -71,10 +77,6 @@ public class Player : MonoBehaviourPunCallbacks
         }
 
         // get score tracker references.
-        gameManagerObject = GameObject.Find("In-game Manager");
-        gameManager = gameManagerObject.GetComponent<GameManager>();
-        scoreTextObject = GameObject.Find("Canvas/Score Counter");
-        scoreText = scoreTextObject.GetComponent<TextMeshProUGUI>();
 
         Cursor.lockState = CursorLockMode.Locked;
 
@@ -110,10 +112,10 @@ public class Player : MonoBehaviourPunCallbacks
         translation = Input.GetAxis("Vertical") * speed * Time.deltaTime;
         straffe = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
         movement = new Vector3(straffe, 0, translation);
-        
+
         smoother = movement.magnitude;
         Mathf.Clamp(smoother, 0, 1);
-        
+
         movement.Normalize();
         transform.Translate(movement * smoother);
 
@@ -179,7 +181,7 @@ public class Player : MonoBehaviourPunCallbacks
     {
 
         Debug.Log(playerInfo);
-        
+
         if (playerInfo == "EnemyPlayer")
         {
             Debug.Log("enemy perished");
@@ -218,7 +220,7 @@ public class Player : MonoBehaviourPunCallbacks
     public void HealthUpdate()
     {
         //if (!this.photonView.IsMine) return;
-        // clamp health to not go above max HP. 
+        // clamp health to not go above max HP.
         if (health > maxHealth)
         {
             health = maxHealth;
@@ -229,7 +231,7 @@ public class Player : MonoBehaviourPunCallbacks
             healthBarFill.color = goodHealth;
         }
 
-        // clamp health to not go below 0. 
+        // clamp health to not go below 0.
         if (health < 0)
         {
             health = 0;
@@ -265,7 +267,7 @@ public class Player : MonoBehaviourPunCallbacks
         if (!this.photonView.IsMine) return;
         hpRestore.Play();
 
-        // restore HP by some randomly decided value. 
+        // restore HP by some randomly decided value.
         health += 40.2f;
         HealthUpdate();
 
@@ -281,7 +283,7 @@ public class Player : MonoBehaviourPunCallbacks
         //this.photonView.RPC("HealthUpdate", RpcTarget.All);
         HealthUpdate();
     }
-    
+
     public void AttackHit()
     {
         this.photonView.RPC("ReceiveAttackHit", RpcTarget.All);
@@ -311,7 +313,7 @@ public class Player : MonoBehaviourPunCallbacks
     {
         this.photonView.RPC("IncreaseSpeedHit", RpcTarget.All);
     }
-    
+
     [PunRPC]
     void IncreaseSpeedHit()
     {
