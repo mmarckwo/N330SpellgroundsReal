@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class ImpulseSpell : MonoBehaviour
+public class ImpulseSpell : MonoBehaviourPun
 {
 
     public GameObject hitEffect;
@@ -30,7 +31,8 @@ public class ImpulseSpell : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Enemy")
+        if (!this.photonView.IsMine) return;
+        if (other.gameObject.tag == "Enemy")
         {
             Instantiate(hitEffect, other.transform.position, Quaternion.identity);
             AudioSource.PlayClipAtPoint(impulseHit, gameObject.transform.position);

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1338889478689987232}
   - component: {fileID: 8788635026621970207}
   - component: {fileID: -4506885160322330593}
+  - component: {fileID: 6413554623192595022}
   m_Layer: 0
   m_Name: AttackSpell
   m_TagString: Untagged
@@ -126,7 +127,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8b7b19272c45dd49a8e54de612cad7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitEffect: {fileID: 3956909122518959908, guid: 30a22caf2fbdaf54ab72d5a4db64f898, type: 3}
   spellName: Attack
   attackHit: {fileID: 8300000, guid: 2a0dc779cf737014f9665de2e5257707, type: 3}
 --- !u!114 &-4506885160322330593
@@ -147,7 +147,24 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 6413554623192595022}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &6413554623192595022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5265006535068929657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 0
+  m_SynchronizeScale: 0
+  m_UseLocal: 1

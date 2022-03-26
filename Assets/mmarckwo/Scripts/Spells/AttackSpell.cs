@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class AttackSpell : MonoBehaviour
+public class AttackSpell : MonoBehaviourPun
 {
 
-    public GameObject hitEffect;
+    private string hitEffect = "punch_effect";
     public string spellName = "Attack";
 
     public AudioClip attackHit;
@@ -27,12 +28,14 @@ public class AttackSpell : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Enemy")
+        if (!this.photonView.IsMine) return;
+        if (other.gameObject.tag == "Enemy")
         {
-            Instantiate(hitEffect, other.transform.position, Quaternion.identity);
+            PhotonNetwork.Instantiate(hitEffect, other.transform.position, Quaternion.identity);
             AudioSource.PlayClipAtPoint(attackHit, gameObject.transform.position);
 
             // will need to replace PLAYER script component with an ENEMY script component for the other player. 
+            // send message to other player?
             other.gameObject.GetComponent<Player>().health -= 14.5f;
             other.gameObject.GetComponent<Player>().HealthUpdate();
 
