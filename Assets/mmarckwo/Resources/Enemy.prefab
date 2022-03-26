@@ -108,7 +108,6 @@ GameObject:
   - component: {fileID: 2967925188582634202}
   - component: {fileID: 920387203095324708}
   - component: {fileID: 125196307}
-  - component: {fileID: 4672111870615250460}
   - component: {fileID: 3590282661756672767}
   - component: {fileID: 2315506101710351729}
   m_Layer: 0
@@ -213,36 +212,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &4672111870615250460
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2678046324212233468}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f7bc488ccdc5f84794dd685d2b27c88, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
-  health: 0
-  jumpForce: 22.5
-  baseSpeed: 10
-  speed: 0
-  gravityScale: 2.5
-  groundCheck: {fileID: 182155893}
-  groundDistance: 0.5
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 64
-  jumpSound: {fileID: 757935771840835160}
-  respawnLocation: {fileID: 0}
-  healthBar: {fileID: 0}
-  goodHealth: {r: 0.27058825, g: 1, b: 0.5372549, a: 1}
-  lowHealth: {r: 1, g: 0, b: 0.33333334, a: 1}
-  hpRestore: {fileID: 0}
-  hpDrain: {fileID: 0}
 --- !u!114 &3590282661756672767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -342,10 +311,5 @@ PrefabInstance:
 --- !u!4 &757935771840835161 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 757935772234668023, guid: 48bcd66db3d70a74c9c1ceb063d55742, type: 3}
-  m_PrefabInstance: {fileID: 700037550}
-  m_PrefabAsset: {fileID: 0}
---- !u!82 &757935771840835160 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 757935772234668022, guid: 48bcd66db3d70a74c9c1ceb063d55742, type: 3}
   m_PrefabInstance: {fileID: 700037550}
   m_PrefabAsset: {fileID: 0}

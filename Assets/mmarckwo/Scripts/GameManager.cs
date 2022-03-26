@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("you are not the master client.");
             GameObject p = null;
-            p = PhotonNetwork.Instantiate(this.enemyPrefab.name, p2Spawn.transform.position, Quaternion.identity);
+            p = PhotonNetwork.Instantiate(this.playerPrefab.name, p2Spawn.transform.position, Quaternion.identity);
             p.name = "EnemyPlayer";
         }
     }
