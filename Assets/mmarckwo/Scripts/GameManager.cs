@@ -8,15 +8,21 @@ public class GameManager : MonoBehaviour
 {
 
     public GameObject playerPrefab;
+    private GameObject p1Spawn;
+    private GameObject p2Spawn;
 
     // Start is called before the first frame update
     void Start()
     {
+        // find initial spawn locations in game world.
+        p1Spawn = GameObject.Find("P1 Spawn");
+        p2Spawn = GameObject.Find("P2 Spawn");
+
         if (PhotonNetwork.IsMasterClient)
         {
             Debug.Log("you are the master client.");
             GameObject p = null;
-            p = PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector3(0, 310, 0), Quaternion.identity);
+            p = PhotonNetwork.Instantiate(this.playerPrefab.name, p1Spawn.transform.position, Quaternion.identity);
             p.name = "ClientPlayer";
         }
     }

@@ -470,9 +470,6 @@ MonoBehaviour:
   impulseSpell: {fileID: 5265006535068929657, guid: bddd09bda8a1b4145b90d9567a0874b7, type: 3}
   speedSpell: {fileID: 5265006535068929657, guid: f083501beda034342aa9c0c78d740ae8, type: 3}
   shootSpeed: 700
-  attackIndicator: {fileID: 0}
-  impulseIndicator: {fileID: 0}
-  speedIndicator: {fileID: 0}
   attackSound: {fileID: 6746036797912933400}
   impulseSound: {fileID: 534659099992927969}
   speedSound: {fileID: 3228475772892654059}
