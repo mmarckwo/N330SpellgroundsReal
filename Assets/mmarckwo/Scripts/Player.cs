@@ -148,8 +148,8 @@ public class Player : MonoBehaviourPunCallbacks
         if(gameObject.transform.position.y <= -80)
         {
             Respawn();
-            UpdateScore(this.gameObject.tag);
-            //this.photonView.RPC("UpdateScore", RpcTarget.All, this.gameObject.tag);
+            //UpdateScore(this.gameObject.tag);
+            this.photonView.RPC("UpdateScore", RpcTarget.All, this.gameObject.name);
         }
     }
 
@@ -174,16 +174,19 @@ public class Player : MonoBehaviourPunCallbacks
         rb.velocity = new Vector3(0, globalGravity, 0);
     }
 
-    //[PunRPC]
+    [PunRPC]
     void UpdateScore(string playerInfo)
     {
-        if (playerInfo == "Enemy")
+
+        Debug.Log(playerInfo);
+        
+        if (playerInfo == "EnemyPlayer")
         {
             Debug.Log("enemy perished");
             score += 1;
             Debug.Log("Player score: " + score);
         }
-        else if (playerInfo == "Player")
+        else if (playerInfo == "ClientPlayer")
         {
             Debug.Log("player perished");
             enemyScore += 1;
@@ -236,8 +239,8 @@ public class Player : MonoBehaviourPunCallbacks
         if (health == 0)
         {
             Respawn();
-            UpdateScore(this.gameObject.tag);
-            //this.photonView.RPC("UpdateScore", RpcTarget.All, this.gameObject.tag);
+            //UpdateScore(this.gameObject.tag);
+            this.photonView.RPC("UpdateScore", RpcTarget.All, this.gameObject.name);
             this.photonView.RPC("PlayDeathSound", RpcTarget.All);
         }
 
@@ -270,7 +273,7 @@ public class Player : MonoBehaviourPunCallbacks
         // decrease health by arbitrarily decided value.
         health -= 15.2f;
         this.photonView.RPC("HealthUpdate", RpcTarget.All);
-        HealthUpdate();
+        //HealthUpdate();
     }
     
     public void AttackHit()
@@ -283,6 +286,7 @@ public class Player : MonoBehaviourPunCallbacks
     {
         if (!this.photonView.IsMine) return;
         health -= 14.5f;
+        // rpc???
         HealthUpdate();
     }
 
