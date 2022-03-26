@@ -594,6 +594,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 3590282661756672767, guid: 7ad0318b686feb54bb3c6bb705b25978, type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4672111870615250460, guid: 7ad0318b686feb54bb3c6bb705b25978, type: 3}
       propertyPath: healthBar
       value: 
