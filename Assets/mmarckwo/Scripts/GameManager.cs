@@ -36,4 +36,14 @@ public class GameManager : MonoBehaviourPunCallbacks
             player.tag = "Player";
         }
     }
+
+    public void PlayerWin()
+    {
+        Debug.Log("player wins");
+    }
+
+    public void EnemyWin()
+    {
+        Debug.Log("enemy wins");
+    }
 }

@@ -45,12 +45,17 @@ public class Player : MonoBehaviourPunCallbacks
     [Header("HP Sounds")]
     public AudioSource hpRestore;
     public AudioSource hpDrain;
+    public AudioSource deathSound;
 
     private Rigidbody rb;
 
     // score for the game, get to three to win.
     private int score = 0;
     private int enemyScore = 0;
+    // needed for scoring system.
+    private GameObject gameManagerObject;
+    private GameManager gameManager;
+
 
     // Start is called before the first frame update
     void Start()
@@ -60,6 +65,9 @@ public class Player : MonoBehaviourPunCallbacks
             this.GetComponentInChildren<AudioListener>().enabled = false;
             return;
         }
+
+        gameManagerObject = GameObject.Find("In-game Manager");
+        gameManager = gameManagerObject.GetComponent<GameManager>();
 
         Cursor.lockState = CursorLockMode.Locked;
 
@@ -173,6 +181,16 @@ public class Player : MonoBehaviourPunCallbacks
             enemyScore += 1;
             Debug.Log("Enemy score: " + enemyScore);
         }
+
+        if (score == 3)
+        {
+            gameManager.PlayerWin();
+        }
+
+        if (enemyScore == 3)
+        {
+            gameManager.EnemyWin();
+        }
     }
 
     // update health bar UI.
@@ -207,10 +225,17 @@ public class Player : MonoBehaviourPunCallbacks
         {
             Respawn();
             this.photonView.RPC("UpdateScore", RpcTarget.All);
+            this.photonView.RPC("PlayDeathSound", RpcTarget.All);
         }
 
         // update health bar fill amount.
         healthBarFill.fillAmount = health / maxHealth;
+    }
+
+    [PunRPC]
+    void PlayDeathSound()
+    {
+        deathSound.Play();
     }
 
     void HealthUp()
