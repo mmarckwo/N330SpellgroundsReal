@@ -8,6 +8,8 @@ public class PlayerAttack : MonoBehaviourPun
 {
     // access mouse cam script to get camera pitch.
     public MouseCamLook playerCam;
+    // get camera x rotation to rotate model.
+    //private float playerXRotation;
 
     [Header("Magic Attacks")]
     private string attackSpell = "AttackSpell";
@@ -46,6 +48,7 @@ public class PlayerAttack : MonoBehaviourPun
     private void Start()
     {
         if (!this.photonView.IsMine) return;
+
         // find spell indicator refrences in scene hierarchy.
         attackIndicatorObject = GameObject.Find("Canvas/Spell Icons/Attack Spell/Attack Indicator");
         impulseIndicatorObject = GameObject.Find("Canvas/Spell Icons/Impulse Spell/Impulse Indicator");
@@ -121,7 +124,10 @@ public class PlayerAttack : MonoBehaviourPun
 
         }
 
-
+        // attempt to get player camera x rotation to rotate player model. idk.
+        //playerXRotation = playerCam.GetComponent<Transform>().eulerAngles.y;
+        //transform.rotation *= playerCam.lookAngle;
+        //Debug.Log(playerCam.lookAngle);
     }
 
     void FixedUpdate()

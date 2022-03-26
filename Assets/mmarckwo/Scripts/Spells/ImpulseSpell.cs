@@ -39,8 +39,8 @@ public class ImpulseSpell : MonoBehaviourPun
             // get direction spell is facing (angle player shot it at), multiply by impulse force.
             force = transform.forward * forceStrength;
 
-            // will need to replace player script with an enemy script for the other player. 
-            other.GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
+            // push back the other player with created force value.
+            other.gameObject.GetComponent<Player>().ImpulseHit(force);
 
             // destroy self and play sound when the spell hits the enemy.
             this.photonView.RPC("DestroySpellByHit", RpcTarget.All);

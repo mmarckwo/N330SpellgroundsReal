@@ -127,7 +127,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86873dfd414746041b3832b67b53ac4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitEffect: {fileID: 3956909122518959908, guid: 30a22caf2fbdaf54ab72d5a4db64f898, type: 3}
   spellName: Impulse
   forceStrength: 45
   impulseHit: {fileID: 8300000, guid: 0ea197b943d50e3408a524a41735cd70, type: 3}

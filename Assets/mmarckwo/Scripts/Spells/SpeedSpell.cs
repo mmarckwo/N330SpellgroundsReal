@@ -33,9 +33,8 @@ public class SpeedSpell : MonoBehaviourPun
         {
             PhotonNetwork.Instantiate(hitEffect, other.transform.position, Quaternion.identity);
 
-            // will need to replace player script with an enemy script for the other player. 
             // increase the enemy's speed.
-            other.gameObject.GetComponent<Player>().speed += 2.5f;
+            other.gameObject.GetComponent<Player>().IncreaseSpeed();
 
             // destroy self and play sound when the spell hits the enemy.
             this.photonView.RPC("DestroySpellByHit", RpcTarget.All);

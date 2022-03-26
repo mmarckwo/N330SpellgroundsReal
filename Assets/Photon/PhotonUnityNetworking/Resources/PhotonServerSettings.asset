@@ -52,6 +52,11 @@ MonoBehaviour:
   - DestroyItem
   - DestroySpell
   - DestroySpellByHit
+  - IncreaseSpeed
+  - IncreaseSpeedHit
+  - ReceiveAttackHit
+  - TakeKnockback
+  - Respawn
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

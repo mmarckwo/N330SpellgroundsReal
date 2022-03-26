@@ -227,4 +227,40 @@ public class Player : MonoBehaviourPunCallbacks
         health -= 15.2f;
         HealthUpdate();
     }
+    
+    public void AttackHit()
+    {
+        this.photonView.RPC("ReceiveAttackHit", RpcTarget.All);
+    }
+
+    [PunRPC]
+    void ReceiveAttackHit()
+    {
+        if (!this.photonView.IsMine) return;
+        health -= 14.5f;
+        HealthUpdate();
+    }
+
+    public void ImpulseHit(Vector3 force)
+    {
+        this.photonView.RPC("TakeKnockback", RpcTarget.All, force);
+    }
+
+    [PunRPC]
+    void TakeKnockback(Vector3 force)
+    {
+        this.GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
+    }
+
+    public void IncreaseSpeed()
+    {
+        this.photonView.RPC("IncreaseSpeedHit", RpcTarget.All);
+    }
+    
+    [PunRPC]
+    void IncreaseSpeedHit()
+    {
+        if (!this.photonView.IsMine) return;
+        speed += 2.5f;
+    }
 }
