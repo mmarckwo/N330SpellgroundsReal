@@ -2,16 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Photon.Pun;
 
-public class PlayerAttack : MonoBehaviour
+public class PlayerAttack : MonoBehaviourPun
 {
     // access mouse cam script to get camera pitch.
     public MouseCamLook playerCam;
 
     [Header("Magic Attacks")]
-    public GameObject attackSpell;
-    public GameObject impulseSpell;
-    public GameObject speedSpell;
+    private string attackSpell = "AttackSpell";
+    private string impulseSpell = "ImpulseSpell";
+    private string speedSpell = "SpeedSpell";
     public float shootSpeed = 700f;
     private int spellSelect = 1;        // default to attack spell.
     private GameObject attack;
@@ -57,7 +58,7 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
-
+        if (!this.photonView.IsMine) return;
         // check for when the player switches spells and set the indicators on the icons to bold & italic.
         if (Input.GetKeyDown("1"))
         {
@@ -95,23 +96,23 @@ public class PlayerAttack : MonoBehaviour
             switch(spellSelect)
             {
                 case 1:
-                    attack = Instantiate(attackSpell, transform.position, (transform.rotation * playerCam.lookAngle));
+                    attack = PhotonNetwork.Instantiate(attackSpell, transform.position, (transform.rotation * playerCam.lookAngle));
                     attackSound.Play();
                     attack.GetComponent<Rigidbody>().AddRelativeForce(0, 0, shootSpeed);
                     break;
                 case 2:
-                    attack = Instantiate(impulseSpell, transform.position, (transform.rotation * playerCam.lookAngle));
+                    attack = PhotonNetwork.Instantiate(impulseSpell, transform.position, (transform.rotation * playerCam.lookAngle));
                     impulseSound.Play();
                     attack.GetComponent<Rigidbody>().AddRelativeForce(0, 0, shootSpeed);
                     break;
                 case 3:
-                    attack = Instantiate(speedSpell, transform.position, (transform.rotation * playerCam.lookAngle));
+                    attack = PhotonNetwork.Instantiate(speedSpell, transform.position, (transform.rotation * playerCam.lookAngle));
                     speedSound.Play();
                     attack.GetComponent<Rigidbody>().AddRelativeForce(0, 0, shootSpeed);
                     break;
                 default:
                     Debug.Log("default attack");
-                    attack = Instantiate(attackSpell, transform.position, (transform.rotation * playerCam.lookAngle));
+                    attack = PhotonNetwork.Instantiate(attackSpell, transform.position, (transform.rotation * playerCam.lookAngle));
                     attackSound.Play();
                     attack.GetComponent<Rigidbody>().AddRelativeForce(0, 0, shootSpeed);
                     break;
