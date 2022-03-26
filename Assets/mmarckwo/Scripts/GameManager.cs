@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     private GameObject p1Spawn;
     private GameObject p2Spawn;
 
-    private Camera playerCamera;
+    private GameObject player;
 
     // Start is called before the first frame update
     void Start()
@@ -24,26 +24,14 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             Debug.Log("you are the master client.");
-            GameObject p = null;
-            p = PhotonNetwork.Instantiate(this.playerPrefab.name, p1Spawn.transform.position, Quaternion.identity);
-            p.name = "ClientPlayer";
-            playerCamera = p.GetComponentInChildren<Camera>();
-            TurnOnCamera();
+            player = PhotonNetwork.Instantiate(this.playerPrefab.name, p1Spawn.transform.position, Quaternion.identity);
+            player.name = "ClientPlayer";
         } 
         else
         {
             Debug.Log("you are not the master client.");
-            GameObject p = null;
-            p = PhotonNetwork.Instantiate(this.playerPrefab.name, p2Spawn.transform.position, Quaternion.identity);
-            p.name = "EnemyPlayer";
-            playerCamera = p.GetComponentInChildren<Camera>();
-            TurnOnCamera();
+            player = PhotonNetwork.Instantiate(this.playerPrefab.name, p2Spawn.transform.position, Quaternion.identity);
+            player.name = "EnemyPlayer";
         }
-    }
-
-    void TurnOnCamera()
-    {
-        if (!photonView.IsMine) return;
-        playerCamera.enabled = true;
     }
 }
