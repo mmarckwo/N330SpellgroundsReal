@@ -133,6 +133,7 @@ public class Player : MonoBehaviourPunCallbacks
         if(gameObject.transform.position.y <= -80)
         {
             Respawn();
+            this.photonView.RPC("UpdateScore", RpcTarget.All);
         }
     }
 
@@ -155,7 +156,11 @@ public class Player : MonoBehaviourPunCallbacks
         speed = baseSpeed;
         HealthUpdate();
         rb.velocity = new Vector3(0, globalGravity, 0);
+    }
 
+    [PunRPC]
+    void UpdateScore()
+    {
         if (gameObject.tag == "Enemy")
         {
             Debug.Log("enemy perished");
@@ -199,8 +204,9 @@ public class Player : MonoBehaviourPunCallbacks
 
         // respawn when dead.
         if (health == 0)
-        {            
+        {
             Respawn();
+            this.photonView.RPC("UpdateScore", RpcTarget.All);
         }
 
         // update health bar fill amount.
