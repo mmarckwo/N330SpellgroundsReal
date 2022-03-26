@@ -45,9 +45,6 @@ public class MPLauncher : MonoBehaviourPunCallbacks
         Debug.Log("Joining room");
         photonView.RPC("CountConnected", RpcTarget.AllBuffered);
         base.OnJoinedRoom();
-        GameObject p = null;
-        //p = PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector3(0, 310, 0), Quaternion.identity);
-        //p.name = "ClientPlayer";
         PhotonNetwork.SetMasterClient(PhotonNetwork.PlayerList[0]);
 
         ExitGames.Client.Photon.Hashtable setValue = new ExitGames.Client.Photon.Hashtable();
@@ -72,7 +69,7 @@ public class MPLauncher : MonoBehaviourPunCallbacks
             ExitGames.Client.Photon.Hashtable setValue = new ExitGames.Client.Photon.Hashtable();
             setValue.Add("enemy", true);
             PhotonNetwork.PlayerList[0].SetCustomProperties(setValue);
-            Invoke("SwapScene", 5f);
+            Invoke("SwapScene", .25f);
         }
     }
 

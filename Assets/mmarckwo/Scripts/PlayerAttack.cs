@@ -17,9 +17,12 @@ public class PlayerAttack : MonoBehaviour
     private GameObject attack;
 
     [Header("Spell indicator icons")]
-    public TextMeshProUGUI attackIndicator;
-    public TextMeshProUGUI impulseIndicator;
-    public TextMeshProUGUI speedIndicator;
+    private TextMeshProUGUI attackIndicator;
+    private TextMeshProUGUI impulseIndicator;
+    private TextMeshProUGUI speedIndicator;
+    private GameObject attackIndicatorObject;
+    private GameObject impulseIndicatorObject;
+    private GameObject speedIndicatorObject;
 
     [Header("Sounds")]
     public AudioSource attackSound;
@@ -39,7 +42,19 @@ public class PlayerAttack : MonoBehaviour
 
     private bool onCooldown = false;
 
-    // Update is called once per frame
+    private void Start()
+    {
+        // find spell indicator refrences in scene hierarchy.
+        attackIndicatorObject = GameObject.Find("Canvas/Spell Icons/Attack Spell/Attack Indicator");
+        impulseIndicatorObject = GameObject.Find("Canvas/Spell Icons/Impulse Spell/Impulse Indicator");
+        speedIndicatorObject = GameObject.Find("Canvas/Spell Icons/Speed Spell/Speed Indicator");
+
+        // set TMP text refs.
+        attackIndicator = attackIndicatorObject.GetComponent<TextMeshProUGUI>();
+        impulseIndicator = impulseIndicatorObject.GetComponent<TextMeshProUGUI>();
+        speedIndicator = speedIndicatorObject.GetComponent<TextMeshProUGUI>();
+    }
+
     void Update()
     {
 

@@ -1083,7 +1083,7 @@ GameObject:
   - component: {fileID: 1710346473}
   - component: {fileID: 1710346472}
   m_Layer: 0
-  m_Name: respawn
+  m_Name: Respawn Location
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

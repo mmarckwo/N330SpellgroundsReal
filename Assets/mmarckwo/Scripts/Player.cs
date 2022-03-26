@@ -32,10 +32,11 @@ public class Player : MonoBehaviour
     public AudioSource jumpSound;
 
     [Header("Respawner")]
-    public Transform respawnLocation;
+    private GameObject respawner;
+    private Transform respawnLocation;
 
     [Header("Health Bar Properties")]
-    public GameObject healthBar;
+    private GameObject healthBar;
     private Image healthBarFill;
     public Color goodHealth = new Color(69, 255, 137);
     public Color lowHealth = new Color(255, 0, 85);
@@ -55,6 +56,12 @@ public class Player : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
 
+        // find respawn location in scene hierarchy, set respawn location to transform of object.
+        respawner = GameObject.Find("Respawn Location");
+        respawnLocation = respawner.transform;
+
+        // find health bar from UI in scene hierarchy.
+        healthBar = GameObject.Find("Canvas/HealthBar/HealthBarInner");
         // get fill image of health bar.
         healthBarFill = healthBar.GetComponent<Image>();
 
