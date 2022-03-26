@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using Photon.Pun;
 
 public class Player : MonoBehaviourPunCallbacks
@@ -49,12 +50,15 @@ public class Player : MonoBehaviourPunCallbacks
 
     private Rigidbody rb;
 
+    [Header("Score Stuff")]
     // score for the game, get to three to win.
     private int score = 0;
     private int enemyScore = 0;
     // needed for scoring system.
     private GameObject gameManagerObject;
     private GameManager gameManager;
+    private GameObject scoreTextObject;
+    private TextMeshProUGUI scoreText;
 
 
     // Start is called before the first frame update
@@ -66,8 +70,11 @@ public class Player : MonoBehaviourPunCallbacks
             return;
         }
 
+        // get score tracker references.
         gameManagerObject = GameObject.Find("In-game Manager");
         gameManager = gameManagerObject.GetComponent<GameManager>();
+        scoreTextObject = GameObject.Find("Canvas/Score Counter");
+        scoreText = scoreTextObject.GetComponent<TextMeshProUGUI>();
 
         Cursor.lockState = CursorLockMode.Locked;
 
@@ -141,7 +148,8 @@ public class Player : MonoBehaviourPunCallbacks
         if(gameObject.transform.position.y <= -80)
         {
             Respawn();
-            this.photonView.RPC("UpdateScore", RpcTarget.All);
+            UpdateScore(this.gameObject.tag);
+            //this.photonView.RPC("UpdateScore", RpcTarget.All, this.gameObject.tag);
         }
     }
 
@@ -166,21 +174,24 @@ public class Player : MonoBehaviourPunCallbacks
         rb.velocity = new Vector3(0, globalGravity, 0);
     }
 
-    [PunRPC]
-    void UpdateScore()
+    //[PunRPC]
+    void UpdateScore(string playerInfo)
     {
-        if (gameObject.tag == "Enemy")
+        if (playerInfo == "Enemy")
         {
             Debug.Log("enemy perished");
             score += 1;
             Debug.Log("Player score: " + score);
         }
-        else if (gameObject.tag == "Player")
+        else if (playerInfo == "Player")
         {
             Debug.Log("player perished");
             enemyScore += 1;
             Debug.Log("Enemy score: " + enemyScore);
         }
+
+        // update score on screen.
+        //scoreText.SetText(score + " - " + enemyScore);
 
         if (score == 3)
         {
@@ -193,10 +204,11 @@ public class Player : MonoBehaviourPunCallbacks
         }
     }
 
+    [PunRPC]
     // update health bar UI.
     public void HealthUpdate()
     {
-        if (!this.photonView.IsMine) return;
+        //if (!this.photonView.IsMine) return;
         // clamp health to not go above max HP. 
         if (health > maxHealth)
         {
@@ -224,7 +236,8 @@ public class Player : MonoBehaviourPunCallbacks
         if (health == 0)
         {
             Respawn();
-            this.photonView.RPC("UpdateScore", RpcTarget.All);
+            UpdateScore(this.gameObject.tag);
+            //this.photonView.RPC("UpdateScore", RpcTarget.All, this.gameObject.tag);
             this.photonView.RPC("PlayDeathSound", RpcTarget.All);
         }
 
@@ -256,6 +269,7 @@ public class Player : MonoBehaviourPunCallbacks
 
         // decrease health by arbitrarily decided value.
         health -= 15.2f;
+        this.photonView.RPC("HealthUpdate", RpcTarget.All);
         HealthUpdate();
     }
     
