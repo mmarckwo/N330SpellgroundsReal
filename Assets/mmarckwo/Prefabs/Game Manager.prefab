@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3270567007468022064}
   - component: {fileID: 3270567007468022065}
-  - component: {fileID: 3270567007468022067}
+  - component: {fileID: -3272823848713722039}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -47,7 +47,7 @@ MonoBehaviour:
   playerConnected: 0
   txtNumConnected: {fileID: 0}
   playerPrefab: {fileID: 0}
---- !u!114 &3270567007468022067
+--- !u!114 &-3272823848713722039
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

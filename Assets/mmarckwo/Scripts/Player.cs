@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -52,8 +53,11 @@ public class Player : MonoBehaviourPunCallbacks
 
     [Header("Score Stuff")]
     // score for the game, get to three to win.
-    private int score = 0;
-    private int enemyScore = 0;
+    // host player score.
+    [SerializeField] private int score = 0;
+    // get score from enemy.
+    [SerializeField] private int enemyScore = 0;
+    private string playerSearchName;
     // needed for scoring system.
     private GameObject gameManagerObject;
     private GameManager gameManager;
@@ -65,18 +69,17 @@ public class Player : MonoBehaviourPunCallbacks
     void Start()
 
     {
-      gameManagerObject = GameObject.Find("In-game Manager");
-      gameManager = gameManagerObject.GetComponent<GameManager>();
-      scoreTextObject = GameObject.Find("Canvas/Score Counter");
-      scoreText = scoreTextObject.GetComponent<TextMeshProUGUI>();
+        // get score tracker references.
+        gameManagerObject = GameObject.Find("In-game Manager");
+        gameManager = gameManagerObject.GetComponent<GameManager>();
+        scoreTextObject = GameObject.Find("Canvas/Score Counter");
+        scoreText = scoreTextObject.GetComponent<TextMeshProUGUI>();
 
         if (!this.photonView.IsMine)
         {
             this.GetComponentInChildren<AudioListener>().enabled = false;
             return;
         }
-
-        // get score tracker references.
 
         Cursor.lockState = CursorLockMode.Locked;
 
@@ -151,7 +154,7 @@ public class Player : MonoBehaviourPunCallbacks
         {
             Respawn();
             //UpdateScore(this.gameObject.tag);
-            this.photonView.RPC("UpdateScore", RpcTarget.All, this.gameObject.name);
+            //this.photonView.RPC("UpdateScore", RpcTarget.All, this.gameObject.name);
         }
     }
 
@@ -174,35 +177,104 @@ public class Player : MonoBehaviourPunCallbacks
         speed = baseSpeed;
         HealthUpdate();
         rb.velocity = new Vector3(0, globalGravity, 0);
+
+        this.photonView.RPC("PlayDeathSound", RpcTarget.All);
+        this.photonView.RPC("UpdateScore", RpcTarget.All, this.gameObject.name);
     }
 
     [PunRPC]
     void UpdateScore(string playerInfo)
     {
-
-        Debug.Log(playerInfo);
-
         if (playerInfo == "EnemyPlayer")
         {
             Debug.Log("enemy perished");
             score += 1;
-            Debug.Log("Player score: " + score);
         }
         else if (playerInfo == "ClientPlayer")
         {
             Debug.Log("player perished");
             enemyScore += 1;
-            Debug.Log("Enemy score: " + enemyScore);
         }
 
-        UpdateCounter();
+        //UpdateCounter(playerInfo);
+        this.photonView.RPC("UpdateCounter", RpcTarget.All);
     }
 
+    [PunRPC]
     void UpdateCounter()
     {
-        // update score on screen.
-        // crashes idk why.
-        scoreText.SetText(score + " - " + enemyScore);
+
+        // player on their instance is named Player(Clone)
+        // learning this now at the end makes me understand why my code is so bad.
+
+        // get player name on their game instance.
+        if (GameObject.Find("ClientPlayer"))
+        {
+            // if a ClientPlayer can be found in the game world, set the name ref to this.
+            playerSearchName = "ClientPlayer";
+        } 
+        else
+        {
+            // if you're not the client, then you're the enemy.
+            playerSearchName = "EnemyPlayer";
+        }
+
+        // only the master client takes care of the score. result of misfortune.
+        // player search name is global for score updates to appear as intended on each player's screen.
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        // player object name derived from game instance type (player or enemy).
+        GameObject playerScoreObject = GameObject.Find(playerSearchName);
+        enemyScore = playerScoreObject.GetComponent<Player>().enemyScore;
+        Debug.Log(enemyScore);
+
+        GameObject enemyScoreObject = GameObject.Find("Player(Clone)");
+        try
+        {
+            score = enemyScoreObject.GetComponent<Player>().score;
+            Debug.Log(score);
+        } catch (Exception e)
+        {
+            Debug.Log("Enemy player does not exist.");
+        }
+        
+
+        // update score references from each other on both players.
+        try
+        {
+            enemyScoreObject.GetComponent<Player>().enemyScore = enemyScore;
+        } catch (Exception e)
+        {
+            Debug.Log("Cannot update score on enemy player object because it doesn't exist.");
+        }
+        playerScoreObject.GetComponent<Player>().score = score;
+        
+        if(this.gameObject.name == "EnemyPlayer")
+        {
+            // scoreText.SetText();
+        } 
+        else
+        {
+            // scoreText.SetText();
+        }
+
+        this.photonView.RPC("RealScoreUpdate", RpcTarget.All, score, enemyScore);
+    }
+
+    [PunRPC]
+    void RealScoreUpdate(int score, int enemyScore)
+    {
+        Debug.Log(playerSearchName);
+        if(playerSearchName == "ClientPlayer")
+        {
+            // update score on screen from client POV.
+            scoreText.SetText(score + " - " + enemyScore);
+        } 
+        else
+        {
+            // update score on screen from enemy POV.
+            scoreText.SetText(enemyScore + " - " + score);
+        }
 
         if (score == 3)
         {
@@ -248,8 +320,7 @@ public class Player : MonoBehaviourPunCallbacks
         {
             Respawn();
             //UpdateScore(this.gameObject.tag);
-            this.photonView.RPC("UpdateScore", RpcTarget.All, this.gameObject.name);
-            this.photonView.RPC("PlayDeathSound", RpcTarget.All);
+            //this.photonView.RPC("UpdateScore", RpcTarget.All, this.gameObject.name);
         }
 
         // update health bar fill amount.

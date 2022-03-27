@@ -1288,6 +1288,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -3272823848713722039, guid: 81f15f4dbd8e83e46b10c80a1c12c12e, type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3270567007468022064, guid: 81f15f4dbd8e83e46b10c80a1c12c12e, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -1336,10 +1340,6 @@ PrefabInstance:
       propertyPath: txtNumConnected
       value: 
       objectReference: {fileID: 1933543312}
-    - target: {fileID: 3270567007468022067, guid: 81f15f4dbd8e83e46b10c80a1c12c12e, type: 3}
-      propertyPath: sceneViewId
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3270567007468022078, guid: 81f15f4dbd8e83e46b10c80a1c12c12e, type: 3}
       propertyPath: m_Name
       value: Game Manager

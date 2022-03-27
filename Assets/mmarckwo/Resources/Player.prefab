@@ -479,6 +479,8 @@ MonoBehaviour:
   hpRestore: {fileID: 1212874843}
   hpDrain: {fileID: 1348589913}
   deathSound: {fileID: 8105926583470808031}
+  score: 0
+  enemyScore: 0
 --- !u!114 &147685537
 MonoBehaviour:
   m_ObjectHideFlags: 0
