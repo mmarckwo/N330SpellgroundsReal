@@ -44,10 +44,14 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void PlayerWin()
     {
         Debug.Log("player wins");
+        Cursor.lockState = CursorLockMode.Confined;
+        SceneManager.LoadScene("YouWin");
     }
 
     public void EnemyWin()
     {
         Debug.Log("enemy wins");
+        Cursor.lockState = CursorLockMode.Confined;
+        SceneManager.LoadScene("YouLose");
     }
 }
