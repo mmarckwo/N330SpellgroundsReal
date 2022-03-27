@@ -6,11 +6,13 @@ using Photon.Realtime;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
-
+    public GameObject playerOneW;
+    public GameObject playerTwoW;
     public GameObject playerPrefab;
     public GameObject enemyPrefab;
     private GameObject p1Spawn;
     private GameObject p2Spawn;
+
 
     private GameObject player;
 
@@ -27,7 +29,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             player = PhotonNetwork.Instantiate(this.playerPrefab.name, p1Spawn.transform.position, p1Spawn.transform.rotation);
             player.name = "ClientPlayer";
             player.tag = "Player";
-        } 
+        }
         else
         {
             Debug.Log("You are not the master client.");
@@ -39,11 +41,13 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public void PlayerWin()
     {
+      playerOneW.SetActive(true);
         Debug.Log("player wins");
     }
 
     public void EnemyWin()
     {
+      playerTwoW.SetActive(true);
         Debug.Log("enemy wins");
     }
 }
