@@ -278,12 +278,29 @@ public class Player : MonoBehaviourPunCallbacks
 
         if (score == 3)
         {
-            gameManager.PlayerWin();
+            if(playerSearchName == "ClientPlayer")
+            {
+                // if you're the client player in the game and get 3 points you win, else you lose.
+                gameManager.PlayerWin();
+            }
+            else
+            {
+                gameManager.EnemyWin();
+            }
+            
         }
 
         if (enemyScore == 3)
         {
-            gameManager.EnemyWin();
+            // if you're the enemy player in the game and you get 3 points you win, else you lose.
+            if(playerSearchName == "EnemyPlayer")
+            {
+                gameManager.PlayerWin();
+            }
+            else
+            {
+                gameManager.EnemyWin();
+            }
         }
     }
 

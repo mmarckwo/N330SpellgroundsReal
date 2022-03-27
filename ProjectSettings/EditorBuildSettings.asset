@@ -14,9 +14,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/arena1.unity
     guid: 2da912cc6aacce7468d76d15a0e1912d
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/arena2.unity
     guid: 81225e361746fb442b7c7b441fe6546f
+  - enabled: 1
+    path: Assets/Scenes/YouLose.unity
+    guid: 559d23756ff8d0e49a636b11381e3120
+  - enabled: 1
+    path: Assets/Scenes/YouWin.unity
+    guid: f9fff11ba3cf40a40b74ccaee5e0b58a
   - enabled: 0
     path: Assets/Scenes/MenuScene.unity
     guid: e1fef5d5e55a485478089a9059e6ab93

@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
-    public GameObject playerOneW;
-    public GameObject playerTwoW;
     public GameObject playerPrefab;
     public GameObject enemyPrefab;
     private GameObject p1Spawn;
@@ -22,6 +21,9 @@ public class GameManager : MonoBehaviourPunCallbacks
         // find initial spawn locations in game world.
         p1Spawn = GameObject.Find("P1 Spawn");
         p2Spawn = GameObject.Find("P2 Spawn");
+
+        // stop syncing scenes because players will be sent to win or lose screens after the battle.
+        PhotonNetwork.AutomaticallySyncScene = false;
 
         if (PhotonNetwork.IsMasterClient)
         {
@@ -41,13 +43,13 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public void PlayerWin()
     {
-      playerOneW.SetActive(true);
-        Debug.Log("player wins");
+        Cursor.lockState = CursorLockMode.Confined;
+        SceneManager.LoadScene("YouWin");
     }
 
     public void EnemyWin()
     {
-      playerTwoW.SetActive(true);
-        Debug.Log("enemy wins");
+        Cursor.lockState = CursorLockMode.Confined;
+        SceneManager.LoadScene("YouLose");
     }
 }
