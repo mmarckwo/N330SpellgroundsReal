@@ -205,7 +205,7 @@ public class Player : MonoBehaviourPunCallbacks
     {
 
         // player on their instance is named Player(Clone)
-        // learning this now at the end makes me understand why my code is so bad.
+        // sigh.
 
         // get player name on their game instance.
         if (GameObject.Find("ClientPlayer"))
