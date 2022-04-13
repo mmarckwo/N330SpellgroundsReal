@@ -52,8 +52,6 @@ public class Player : MonoBehaviourPunCallbacks,IPunInstantiateMagicCallback
     // host player score.
     [SerializeField] private int score = 0;
     // get score from enemy.
-    [SerializeField] private int enemyScore = 0;
-    //private string playerSearchName;
 	
 	[HideInInspector, SerializeField] public bool isMaster;
 	
@@ -66,7 +64,6 @@ public class Player : MonoBehaviourPunCallbacks,IPunInstantiateMagicCallback
 
     // Start is called before the first frame update
     void Start()
-
     {
         // get score tracker references.
         gameManager = GameObject.Find("In-game Manager").GetComponent<GameManager>();
@@ -103,7 +100,7 @@ public class Player : MonoBehaviourPunCallbacks,IPunInstantiateMagicCallback
 
     void FixedUpdate()
     {
-        if (!this.photonView.IsMine) return;
+        if (gameManager.ShouldntUpdate(this)) return;
 
         // gravity.
         Vector3 gravity = globalGravity * gravityScale * Vector3.up;
@@ -133,7 +130,7 @@ public class Player : MonoBehaviourPunCallbacks,IPunInstantiateMagicCallback
 
     void Update()
     {
-        if (!this.photonView.IsMine) return;
+        if (gameManager.ShouldntUpdate(this)) return;
 
         // free cursor with ESC.
         if (Input.GetKeyDown("escape"))
@@ -166,7 +163,7 @@ public class Player : MonoBehaviourPunCallbacks,IPunInstantiateMagicCallback
 
     void Jump()
     {
-        if (!this.photonView.IsMine) return;
+		if (gameManager.ShouldntUpdate(this)) return;
         // play jump sound;
         jumpSound.Play();
         // player cannot cancel impulse attack by using addforce. (good thing)
@@ -177,7 +174,7 @@ public class Player : MonoBehaviourPunCallbacks,IPunInstantiateMagicCallback
     // reset player stats and position after falling or dying.
     void Respawn()
     {
-        if (!this.photonView.IsMine) return;
+        if (gameManager.ShouldntUpdate(this)) return;
         gameObject.transform.position = respawnLocation.transform.position;
         health = maxHealth;
         speed = baseSpeed;
@@ -236,7 +233,6 @@ public class Player : MonoBehaviourPunCallbacks,IPunInstantiateMagicCallback
     // update health bar UI.
     public void HealthUpdate()
     {
-        //if (!this.photonView.IsMine) return;
         // clamp health to not go above max HP.
         if (health > maxHealth)
         {
@@ -280,7 +276,7 @@ public class Player : MonoBehaviourPunCallbacks,IPunInstantiateMagicCallback
 
     void HealthUp()
     {
-        if (!this.photonView.IsMine) return;
+		if (gameManager.ShouldntUpdate(this)) return;
         hpRestore.Play();
 
         // restore HP by some randomly decided value.
@@ -291,7 +287,7 @@ public class Player : MonoBehaviourPunCallbacks,IPunInstantiateMagicCallback
 
     void HealthDown()
     {
-        if (!this.photonView.IsMine) return;
+		if (gameManager.ShouldntUpdate(this)) return;
         hpDrain.Play();
 
         // decrease health by arbitrarily decided value.
@@ -308,7 +304,7 @@ public class Player : MonoBehaviourPunCallbacks,IPunInstantiateMagicCallback
     [PunRPC]
     void ReceiveAttackHit()
     {
-        if (!this.photonView.IsMine) return;
+		if (gameManager.ShouldntUpdate(this)) return;
         health -= 14.5f;
         // rpc??? NO.
         HealthUpdate();
@@ -333,7 +329,7 @@ public class Player : MonoBehaviourPunCallbacks,IPunInstantiateMagicCallback
     [PunRPC]
     void IncreaseSpeedHit()
     {
-        if (!this.photonView.IsMine) return;
+		if (gameManager.ShouldntUpdate(this)) return;
         speed += 2.5f;
     }
 	
@@ -341,6 +337,8 @@ public class Player : MonoBehaviourPunCallbacks,IPunInstantiateMagicCallback
 	{
 		
 		gameManager = GameObject.Find("In-game Manager").GetComponent<GameManager>();
+		
+		if(this.photonView.IsMine) return;
 		
 		if(this.isMaster){
 			

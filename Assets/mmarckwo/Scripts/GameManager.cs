@@ -13,10 +13,18 @@ public class GameManager : MonoBehaviourPunCallbacks
     private GameObject p1Spawn;
     private GameObject p2Spawn;
 
-    public Player masterPlayer;
-	public Player serverPlayer;
+    public Player masterPlayer = null;
+	public Player serverPlayer = null;
 	
 	public bool playerIsMaster;
+	
+	public bool ShouldntUpdate(Player player){
+		
+		if(!player.photonView.IsMine) return(true);
+		
+		return((this.masterPlayer == null) || (this.serverPlayer == null));
+		
+	}
 	
 	private void SpawnPlayer(string name, bool isMaster, GameObject spawn){
 		
