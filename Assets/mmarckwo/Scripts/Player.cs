@@ -130,8 +130,6 @@ public class Player : MonoBehaviourPunCallbacks,IPunInstantiateMagicCallback
 
     void Update()
     {
-        if (gameManager.ShouldntUpdate(this)) return;
-
         // free cursor with ESC.
         if (Input.GetKeyDown("escape"))
         {
@@ -144,6 +142,8 @@ public class Player : MonoBehaviourPunCallbacks,IPunInstantiateMagicCallback
         {
             Cursor.lockState = CursorLockMode.Locked;
         }
+
+        if (gameManager.ShouldntUpdate(this)) return;
 
         // jump button. only jump when the player is touching the ground.
         if (Input.GetButtonDown("Jump") && isGrounded)
