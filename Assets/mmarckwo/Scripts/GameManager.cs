@@ -13,8 +13,25 @@ public class GameManager : MonoBehaviourPunCallbacks
     private GameObject p1Spawn;
     private GameObject p2Spawn;
 
-    private GameObject player;
-
+    public Player masterPlayer;
+	public Player serverPlayer;
+	
+	public bool playerIsMaster;
+	
+	private void SpawnPlayer(string name, bool isMaster, GameObject spawn){
+		
+		
+		GameObject player = PhotonNetwork.Instantiate(this.playerPrefab.name, spawn.transform.position, spawn.transform.rotation);
+		
+		player.name = name;
+		player.tag = "Player";
+		
+		masterPlayer = player.GetComponent<Player>();
+		masterPlayer.isMaster = isMaster;
+		masterPlayer.gameManager = this;
+		
+	}
+	
     // Start is called before the first frame update
     void Start()
     {
@@ -28,30 +45,47 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             Debug.Log("You are the master client.");
-            player = PhotonNetwork.Instantiate(this.playerPrefab.name, p1Spawn.transform.position, p1Spawn.transform.rotation);
-            player.name = "ClientPlayer";
-            player.tag = "Player";
+			
+			SpawnPlayer("ClientPlayer",true,p1Spawn);
+			
+			playerIsMaster = true;
+			
         }
         else
         {
             Debug.Log("You are not the master client.");
-            player = PhotonNetwork.Instantiate(this.playerPrefab.name, p2Spawn.transform.position, p2Spawn.transform.rotation);
-            player.name = "EnemyPlayer";
-            player.tag = "Player";
+            
+			/*serverPlayer = PhotonNetwork.Instantiate(this.playerPrefab.name, p2Spawn.transform.position, p2Spawn.transform.rotation).GetComponent<Player>();
+            serverPlayer.GameObject.name = "EnemyPlayer";
+            serverPlayer.GameObject.tag = "Player";
+			serverPlayer.isMaster = false;*/
+			
+			SpawnPlayer("EnemyPlayer",false,p2Spawn);
+			
+			playerIsMaster = false;
+			
         }
+		
+		//masterPlayer.isMaster = false;
+		
     }
-
-    public void PlayerWin()
-    {
-        Debug.Log("player wins");
-        Cursor.lockState = CursorLockMode.Confined;
-        SceneManager.LoadScene("YouWin");
-    }
-
-    public void EnemyWin()
-    {
-        Debug.Log("enemy wins");
-        Cursor.lockState = CursorLockMode.Confined;
-        SceneManager.LoadScene("YouLose");
-    }
+	
+	public void EndScreen(bool won){
+		
+		if(won){
+			
+			Debug.Log("player wins");
+			Cursor.lockState = CursorLockMode.Confined;
+			SceneManager.LoadScene("YouWin");
+			
+		}else{
+			
+			Debug.Log("enemy wins");
+			Cursor.lockState = CursorLockMode.Confined;
+			SceneManager.LoadScene("YouLose");
+			
+		}
+		
+	}
+	
 }

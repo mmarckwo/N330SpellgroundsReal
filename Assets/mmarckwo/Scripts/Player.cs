@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 using Photon.Pun;
 
-public class Player : MonoBehaviourPunCallbacks
+public class Player : MonoBehaviourPunCallbacks,IPunInstantiateMagicCallback
 {
 
     public float maxHealth = 10.0f;
@@ -53,10 +53,13 @@ public class Player : MonoBehaviourPunCallbacks
     [SerializeField] private int score = 0;
     // get score from enemy.
     [SerializeField] private int enemyScore = 0;
-    private string playerSearchName;
+    //private string playerSearchName;
+	
+	[HideInInspector, SerializeField] public bool isMaster;
+	
+    public GameManager gameManager;
+	
     // needed for scoring system.
-    private GameObject gameManagerObject;
-    private GameManager gameManager;
     private GameObject scoreTextObject;
     private TextMeshProUGUI scoreText;
 
@@ -66,8 +69,7 @@ public class Player : MonoBehaviourPunCallbacks
 
     {
         // get score tracker references.
-        gameManagerObject = GameObject.Find("In-game Manager");
-        gameManager = gameManagerObject.GetComponent<GameManager>();
+        gameManager = GameObject.Find("In-game Manager").GetComponent<GameManager>();
         scoreTextObject = GameObject.Find("Canvas/Score Counter");
         scoreText = scoreTextObject.GetComponent<TextMeshProUGUI>();
 
@@ -108,16 +110,22 @@ public class Player : MonoBehaviourPunCallbacks
         rb.AddForce(gravity, ForceMode.Acceleration);
 
         // movement.
-        float translation = Input.GetAxis("Vertical") * speed * Time.deltaTime;
-        float straffe = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
+        float translation = Input.GetAxis("Vertical");
+        float straffe = Input.GetAxis("Horizontal");
         Vector3 movement = new Vector3(straffe, 0, translation);
-
-        //smoother = movement.magnitude;
-        //Mathf.Clamp(smoother, 0, 1);
-
-        movement.Normalize();
-        //transform.Translate(movement * smoother);
-		transform.Translate(movement * Mathf.Clamp(movement.magnitude, 0, 1));
+		
+		float movementMagnitudeSquared = movement.sqrMagnitude;
+		
+		if(movementMagnitudeSquared > 1.0f){
+			
+			movement /= Mathf.Sqrt(movementMagnitudeSquared);
+			
+		}
+		
+		movement *= speed;
+		movement *= Time.deltaTime;
+		
+		transform.Translate(movement);
 
         // check for jump availability.
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
@@ -144,6 +152,7 @@ public class Player : MonoBehaviourPunCallbacks
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
             Jump();
+			isGrounded = false;
         }
 
         // respawn the player after going below 80 in the world.
@@ -176,129 +185,51 @@ public class Player : MonoBehaviourPunCallbacks
         rb.velocity = new Vector3(0, globalGravity, 0);
 
         this.photonView.RPC("PlayDeathSound", RpcTarget.All);
-        this.photonView.RPC("UpdateScore", RpcTarget.All, this.gameObject.name);
+        this.photonView.RPC("IncrementScore", RpcTarget.All, this.isMaster);
     }
 
     [PunRPC]
-    void UpdateScore(string playerInfo)
+    void IncrementScore(bool incrementMaster)
     {
-        if (playerInfo == "EnemyPlayer")
-        {
-            Debug.Log("enemy perished");
-            score += 1;
+        if(incrementMaster){
+			
+            Debug.Log("master perished");
+            gameManager.serverPlayer.score++;
+			
+        }else{
+			
+            Debug.Log("server perished");
+            gameManager.masterPlayer.score++;
+			
         }
-        else if (playerInfo == "ClientPlayer")
-        {
-            Debug.Log("player perished");
-            enemyScore += 1;
-        }
-
-        //UpdateCounter(playerInfo);
-        this.photonView.RPC("UpdateCounter", RpcTarget.All);
+		
+		if(gameManager.playerIsMaster){
+				
+			ScoreUpdate(gameManager.masterPlayer.score,gameManager.serverPlayer.score);
+			
+		}else{
+			
+			ScoreUpdate(gameManager.serverPlayer.score,gameManager.masterPlayer.score);
+			
+		}
+		
+		if(gameManager.serverPlayer.score == 3){
+			
+			gameManager.EndScreen(!this.isMaster);
+			
+		}else if(gameManager.masterPlayer.score == 3){
+			
+			gameManager.EndScreen(this.isMaster);
+			
+		}
+		
     }
 
-    [PunRPC]
-    void UpdateCounter()
+    void ScoreUpdate(int leftScore, int rightScore)
     {
-
-        // player on their instance is named Player(Clone)
-        // sigh.
-
-        // get player name on their game instance.
-        if (GameObject.Find("ClientPlayer"))
-        {
-            // if a ClientPlayer can be found in the game world, set the name ref to this.
-            playerSearchName = "ClientPlayer";
-        } 
-        else
-        {
-            // if you're not the client, then you're the enemy.
-            playerSearchName = "EnemyPlayer";
-        }
-
-        // only the master client takes care of the score. result of misfortune.
-        // player search name is global for score updates to appear as intended on each player's screen.
-        if (!PhotonNetwork.IsMasterClient) return;
-
-        // player object name derived from game instance type (player or enemy).
-        GameObject playerScoreObject = GameObject.Find(playerSearchName);
-        enemyScore = playerScoreObject.GetComponent<Player>().enemyScore;
-        Debug.Log(enemyScore);
-
-        GameObject enemyScoreObject = GameObject.Find("Player(Clone)");
-        try
-        {
-            score = enemyScoreObject.GetComponent<Player>().score;
-            Debug.Log(score);
-        } catch (Exception e)
-        {
-            Debug.Log("Enemy player does not exist.");
-        }
-        
-
-        // update score references from each other on both players.
-        try
-        {
-            enemyScoreObject.GetComponent<Player>().enemyScore = enemyScore;
-        } catch (Exception e)
-        {
-            Debug.Log("Cannot update score on enemy player object because it doesn't exist.");
-        }
-        playerScoreObject.GetComponent<Player>().score = score;
-        
-        if(this.gameObject.name == "EnemyPlayer")
-        {
-            // scoreText.SetText();
-        } 
-        else
-        {
-            // scoreText.SetText();
-        }
-
-        this.photonView.RPC("RealScoreUpdate", RpcTarget.All, score, enemyScore);
-    }
-
-    [PunRPC]
-    void RealScoreUpdate(int score, int enemyScore)
-    {
-        Debug.Log(playerSearchName);
-        if(playerSearchName == "ClientPlayer")
-        {
-            // update score on screen from client POV.
-            scoreText.SetText(score + " - " + enemyScore);
-        } 
-        else
-        {
-            // update score on screen from enemy POV.
-            scoreText.SetText(enemyScore + " - " + score);
-        }
-
-        if (score == 3)
-        {
-            if(playerSearchName == "ClientPlayer")
-            {
-                // if you're the client player in the game and get 3 points you win, else you lose.
-                gameManager.PlayerWin();
-            }
-            else
-            {
-                gameManager.EnemyWin();
-            }
-            
-        }
-
-        if (enemyScore == 3)
-        {
-            // if you're the enemy player in the game and you get 3 points you win, else you lose.
-            if(playerSearchName == "EnemyPlayer")
-            {
-                gameManager.PlayerWin();
-            }
-            else
-            {
-                gameManager.EnemyWin();
-            }
-        }
+		
+		scoreText.SetText(leftScore + " - " + rightScore);
+		
     }
 
     //[PunRPC]
@@ -405,4 +336,21 @@ public class Player : MonoBehaviourPunCallbacks
         if (!this.photonView.IsMine) return;
         speed += 2.5f;
     }
+	
+	public void OnPhotonInstantiate(PhotonMessageInfo info)
+	{
+		
+		gameManager = GameObject.Find("In-game Manager").GetComponent<GameManager>();
+		
+		if(this.isMaster){
+			
+			gameManager.masterPlayer = this;
+			
+		}else{
+			
+			gameManager.serverPlayer = this;
+			
+		}
+		
+	}
 }

@@ -481,6 +481,8 @@ MonoBehaviour:
   deathSound: {fileID: 8105926583470808031}
   score: 0
   enemyScore: 0
+  isMaster: 0
+  gameManager: {fileID: 0}
 --- !u!114 &147685537
 MonoBehaviour:
   m_ObjectHideFlags: 0
