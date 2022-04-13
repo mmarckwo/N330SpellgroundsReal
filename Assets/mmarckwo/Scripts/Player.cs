@@ -18,10 +18,6 @@ public class Player : MonoBehaviourPunCallbacks
 
     public float baseSpeed = 10.0f;
     public float speed = 10.0f;
-    private float translation;
-    private float straffe;
-    private Vector3 movement;
-    private float smoother;
 
     // player will use its own gravity for jump physics.
     public float gravityScale = 1.0f;
@@ -112,15 +108,16 @@ public class Player : MonoBehaviourPunCallbacks
         rb.AddForce(gravity, ForceMode.Acceleration);
 
         // movement.
-        translation = Input.GetAxis("Vertical") * speed * Time.deltaTime;
-        straffe = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
-        movement = new Vector3(straffe, 0, translation);
+        float translation = Input.GetAxis("Vertical") * speed * Time.deltaTime;
+        float straffe = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
+        Vector3 movement = new Vector3(straffe, 0, translation);
 
-        smoother = movement.magnitude;
-        Mathf.Clamp(smoother, 0, 1);
+        //smoother = movement.magnitude;
+        //Mathf.Clamp(smoother, 0, 1);
 
         movement.Normalize();
-        transform.Translate(movement * smoother);
+        //transform.Translate(movement * smoother);
+		transform.Translate(movement * Mathf.Clamp(movement.magnitude, 0, 1));
 
         // check for jump availability.
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
