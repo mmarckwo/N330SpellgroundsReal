@@ -476,6 +476,7 @@ MonoBehaviour:
   jumpSound: {fileID: 2366799278194064813}
   goodHealth: {r: 0.27058825, g: 1, b: 0.5372549, a: 1}
   lowHealth: {r: 1, g: 0, b: 0.33333334, a: 1}
+  healthLerpSpeed: 5
   hpRestore: {fileID: 1212874843}
   hpDrain: {fileID: 1348589913}
   deathSound: {fileID: 8105926583470808031}

@@ -39,6 +39,7 @@ public class Player : MonoBehaviourPunCallbacks,IPunInstantiateMagicCallback
     private Image healthBarFill;
     public Color goodHealth = new Color(69, 255, 137);
     public Color lowHealth = new Color(255, 0, 85);
+    public float healthLerpSpeed = 5;       // higher lerp speed goes faster.
 
     [Header("HP Sounds")]
     public AudioSource hpRestore;
@@ -100,6 +101,7 @@ public class Player : MonoBehaviourPunCallbacks,IPunInstantiateMagicCallback
 
     void FixedUpdate()
     {
+        // COMMENTED OUT FOR TESTING. REINSERT AS CODE WHEN DONE.
         if (gameManager.ShouldntUpdate(this)) return;
 
         // gravity.
@@ -130,6 +132,12 @@ public class Player : MonoBehaviourPunCallbacks,IPunInstantiateMagicCallback
 
     void Update()
     {
+        // player only updates themselves.
+        if (!this.photonView.IsMine) return;
+
+        // animate HP bar fill.
+        HPLerp();
+
         // free cursor with ESC.
         if (Input.GetKeyDown("escape"))
         {
@@ -263,9 +271,13 @@ public class Player : MonoBehaviourPunCallbacks,IPunInstantiateMagicCallback
             //UpdateScore(this.gameObject.tag);
             //this.photonView.RPC("UpdateScore", RpcTarget.All, this.gameObject.name);
         }
+    }
 
+    void HPLerp()
+    {
+        // goes in Update() to animate lerp.
         // update health bar fill amount.
-        healthBarFill.fillAmount = health / maxHealth;
+        healthBarFill.fillAmount = Mathf.Lerp(healthBarFill.fillAmount, (health / maxHealth), Time.deltaTime * healthLerpSpeed);
     }
 
     [PunRPC]
