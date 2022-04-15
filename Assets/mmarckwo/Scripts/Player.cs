@@ -77,7 +77,7 @@ public class Player : MonoBehaviourPunCallbacks,IPunInstantiateMagicCallback
             return;
         }
 
-        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Confined;
 
         // find respawn location in scene hierarchy, set respawn location to transform of object.
         respawner = GameObject.Find("Respawn Location");
@@ -102,7 +102,7 @@ public class Player : MonoBehaviourPunCallbacks,IPunInstantiateMagicCallback
     void FixedUpdate()
     {
         // COMMENTED OUT FOR TESTING. REINSERT AS CODE WHEN DONE.
-        if (gameManager.ShouldntUpdate(this)) return;
+        //if (gameManager.ShouldntUpdate(this)) return;
 
         // gravity.
         Vector3 gravity = globalGravity * gravityScale * Vector3.up;
@@ -148,7 +148,7 @@ public class Player : MonoBehaviourPunCallbacks,IPunInstantiateMagicCallback
         // lock the cursor back in when the game is clicked.
         if (Input.GetButtonDown("Fire1"))
         {
-            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.lockState = CursorLockMode.Confined;
         }
 
         if (gameManager.ShouldntUpdate(this)) return;

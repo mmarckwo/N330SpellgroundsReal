@@ -100,23 +100,23 @@ public class PlayerAttack : MonoBehaviourPun
             switch(spellSelect)
             {
                 case 1:
-                    attack = PhotonNetwork.Instantiate(attackSpell, transform.position, (transform.rotation * playerCam.lookAngle));
+                    attack = PhotonNetwork.Instantiate(attackSpell, transform.position, (transform.rotation)); // * playerCam.lookAngle
                     attackSound.Play();
                     attack.GetComponent<Rigidbody>().AddRelativeForce(0, 0, shootSpeed);
                     break;
                 case 2:
-                    attack = PhotonNetwork.Instantiate(impulseSpell, transform.position, (transform.rotation * playerCam.lookAngle));
+                    attack = PhotonNetwork.Instantiate(impulseSpell, transform.position, (transform.rotation));
                     impulseSound.Play();
                     attack.GetComponent<Rigidbody>().AddRelativeForce(0, 0, shootSpeed);
                     break;
                 case 3:
-                    attack = PhotonNetwork.Instantiate(speedSpell, transform.position, (transform.rotation * playerCam.lookAngle));
+                    attack = PhotonNetwork.Instantiate(speedSpell, transform.position, (transform.rotation));
                     speedSound.Play();
                     attack.GetComponent<Rigidbody>().AddRelativeForce(0, 0, shootSpeed);
                     break;
                 default:
                     Debug.Log("default attack");
-                    attack = PhotonNetwork.Instantiate(attackSpell, transform.position, (transform.rotation * playerCam.lookAngle));
+                    attack = PhotonNetwork.Instantiate(attackSpell, transform.position, (transform.rotation));
                     attackSound.Play();
                     attack.GetComponent<Rigidbody>().AddRelativeForce(0, 0, shootSpeed);
                     break;
