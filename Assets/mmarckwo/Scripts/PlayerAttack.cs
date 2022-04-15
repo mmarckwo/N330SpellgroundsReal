@@ -7,7 +7,7 @@ using Photon.Pun;
 public class PlayerAttack : MonoBehaviourPun
 {
     // access mouse cam script to get camera pitch.
-    public MouseCamLook playerCam;
+    //public MouseCamLook playerCam;
     // get camera x rotation to rotate model.
     //private float playerXRotation;
 

@@ -101,8 +101,8 @@ public class Player : MonoBehaviourPunCallbacks,IPunInstantiateMagicCallback
 
     void FixedUpdate()
     {
-        // COMMENTED OUT FOR TESTING. REINSERT AS CODE WHEN DONE.
-        //if (gameManager.ShouldntUpdate(this)) return;
+        // comment this out when testing single player.
+        if (gameManager.ShouldntUpdate(this)) return;
 
         // gravity.
         Vector3 gravity = globalGravity * gravityScale * Vector3.up;

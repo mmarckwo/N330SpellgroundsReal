@@ -17,12 +17,13 @@ public class MouseCamLook : MonoBehaviourPun
     private Vector2 smoothV;
 
     // reference variable for player script to access camera pitch.
-    public Quaternion lookAngle;
+    //public Quaternion lookAngle;
 
     private Vector3 cameraPosition;
     private Vector3 cameraOffset;
     public Transform cameraTarget;
     private Vector3 mouseTarget;
+    public Texture2D crosshairTexture;
 
     // Use this for initialization
     void Start()
@@ -35,6 +36,7 @@ public class MouseCamLook : MonoBehaviourPun
         }
         cameraOffset = transform.position - cameraTarget.position;
         //character = this.transform.parent.gameObject;
+        Cursor.SetCursor(crosshairTexture, Vector2.zero, CursorMode.Auto);
     }
 
     // LateUpdate so that player's movement updates before the camera's movement.
@@ -45,8 +47,16 @@ public class MouseCamLook : MonoBehaviourPun
         transform.position = cameraPosition;
 
         // POINT TOWARDS MOUSE CURSOR. 
+        //mouseTarget = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 1));
 
-        mouseTarget = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 1));
+        // I don't like raycasting on update but it's more accurate than the below code.
+        Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Plane p = new Plane(Vector3.up, character.transform.position);
+        if(p.Raycast(mouseRay, out float hitDist))
+        {
+            Vector3 hitPoint = mouseRay.GetPoint(hitDist);
+            character.transform.LookAt(hitPoint);
+        }
 
         // md is mouse delta
         //var md = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
@@ -69,11 +79,11 @@ public class MouseCamLook : MonoBehaviourPun
 
         // Using some math to calculate the point of intersection between the line going through the camera and the mouse position with the XZ-Plane
         // (I found this elsewhere)
-        float t = Camera.main.transform.position.y / (Camera.main.transform.position.y - mouseTarget.y);
-        Vector3 finalPoint = new Vector3(t * (mouseTarget.x - Camera.main.transform.position.x) + Camera.main.transform.position.x, 1, t * (mouseTarget.z - Camera.main.transform.position.z) + Camera.main.transform.position.z);
+        //float t = Camera.main.transform.position.y / (Camera.main.transform.position.y - mouseTarget.y);
+        //Vector3 finalPoint = new Vector3(t * (mouseTarget.x - Camera.main.transform.position.x) + Camera.main.transform.position.x, 1, t * (mouseTarget.z - Camera.main.transform.position.z) + Camera.main.transform.position.z);
 
-        character.transform.LookAt(finalPoint, Vector3.up);
+        //character.transform.LookAt(finalPoint, Vector3.up);
         // reset player X and Z rotations.
-        character.transform.eulerAngles = new Vector3(0, character.transform.eulerAngles.y, 0);
+        //character.transform.eulerAngles = new Vector3(0, character.transform.eulerAngles.y, 0);
     }
 }

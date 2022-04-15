@@ -307,8 +307,8 @@ MonoBehaviour:
   sensitivity: 5
   smoothing: 2
   character: {fileID: 3949027924220958762}
-  lookAngle: {x: 0, y: 0, z: 0, w: 0}
   cameraTarget: {fileID: 4634420103898497806}
+  crosshairTexture: {fileID: 2800000, guid: d01a89c734582e241b452b8b7962a5e8, type: 3}
 --- !u!114 &4656049435715425112
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -550,7 +550,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bcdd60e5c0f32a4e8e1dab88a366d0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCam: {fileID: 1242690062}
   shootSpeed: 700
   attackSound: {fileID: 6746036797912933400}
   impulseSound: {fileID: 534659099992927969}
