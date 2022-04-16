@@ -341,6 +341,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5561699808131834134}
   - component: {fileID: 4651375103075856507}
+  - component: {fileID: 1230449171809486934}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -387,6 +388,39 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &1230449171809486934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2678046324212233468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f7bc488ccdc5f84794dd685d2b27c88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  health: 0
+  jumpForce: 22.5
+  baseSpeed: 10
+  speed: 0
+  gravityScale: 2.5
+  groundCheck: {fileID: 182155893}
+  groundDistance: 0.5
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 64
+  jumpSound: {fileID: 0}
+  goodHealth: {r: 0.27058825, g: 1, b: 0.5372549, a: 1}
+  lowHealth: {r: 1, g: 0, b: 0.33333334, a: 1}
+  healthLerpSpeed: 5
+  hpRestore: {fileID: 1212874843}
+  hpDrain: {fileID: 1348589913}
+  deathSound: {fileID: 8105926583470808031}
+  score: 0
+  isMaster: 0
+  gameManager: {fileID: 0}
 --- !u!1 &3949027924220958762
 GameObject:
   m_ObjectHideFlags: 0
@@ -400,7 +434,6 @@ GameObject:
   - component: {fileID: 8635035495222867471}
   - component: {fileID: 8745506641613986873}
   - component: {fileID: 3156092023843663361}
-  - component: {fileID: 6651714285156185090}
   - component: {fileID: 2604499810837790052}
   - component: {fileID: 6420419501480751239}
   - component: {fileID: 5430606160584016939}
@@ -505,39 +538,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &6651714285156185090
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3949027924220958762}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f7bc488ccdc5f84794dd685d2b27c88, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
-  health: 0
-  jumpForce: 22.5
-  baseSpeed: 10
-  speed: 0
-  gravityScale: 2.5
-  groundCheck: {fileID: 182155893}
-  groundDistance: 0.5
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 64
-  jumpSound: {fileID: 0}
-  goodHealth: {r: 0.27058825, g: 1, b: 0.5372549, a: 1}
-  lowHealth: {r: 1, g: 0, b: 0.33333334, a: 1}
-  healthLerpSpeed: 5
-  hpRestore: {fileID: 1212874843}
-  hpDrain: {fileID: 1348589913}
-  deathSound: {fileID: 8105926583470808031}
-  score: 0
-  isMaster: 0
-  gameManager: {fileID: 0}
 --- !u!114 &2604499810837790052
 MonoBehaviour:
   m_ObjectHideFlags: 0

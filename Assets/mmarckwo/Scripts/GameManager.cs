@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 		
 	}
 	
-	private void SpawnPlayer(string name, bool isMaster, GameObject spawn){
+	private Player SpawnPlayer(string name, bool isMaster, GameObject spawn){
 		
 		
 		GameObject player = PhotonNetwork.Instantiate(this.playerPrefab.name, spawn.transform.position, spawn.transform.rotation);
@@ -35,9 +35,11 @@ public class GameManager : MonoBehaviourPunCallbacks
 		//player.tag = "Player";
 		player.transform.Find("Player").tag = "Player";
 		
-		masterPlayer = player.GetComponentInChildren<Player>();
-		masterPlayer.isMaster = isMaster;
-		masterPlayer.gameManager = this;
+		Player newPlayer = player.GetComponentInChildren<Player>();
+		newPlayer.isMaster = isMaster;
+		newPlayer.gameManager = this;
+		
+		return(newPlayer);
 		
 	}
 	
@@ -55,7 +57,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             Debug.Log("You are the master client.");
 			
-			SpawnPlayer("ClientPlayer",true,p1Spawn);
+			this.masterPlayer = SpawnPlayer("ClientPlayer",true,p1Spawn);
 			
 			playerIsMaster = true;
 			
@@ -69,7 +71,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             serverPlayer.GameObject.tag = "Player";
 			serverPlayer.isMaster = false;*/
 			
-			SpawnPlayer("EnemyPlayer",false,p2Spawn);
+			this.serverPlayer = SpawnPlayer("EnemyPlayer",false,p2Spawn);
 			
 			playerIsMaster = false;
 			

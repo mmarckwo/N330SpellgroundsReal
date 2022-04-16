@@ -34,7 +34,7 @@ public class AttackSpell : MonoBehaviourPun
             PhotonNetwork.Instantiate(hitEffect, other.transform.position, Quaternion.identity);
 
             // other player takes damage.
-            other.gameObject.GetComponent<Player>().AttackHit();
+            other.gameObject.GetComponentInChildren<Player>().AttackHit();
 
             // destroy self and play sound when the spell hits the enemy.
             this.photonView.RPC("DestroySpellByHit", RpcTarget.All);

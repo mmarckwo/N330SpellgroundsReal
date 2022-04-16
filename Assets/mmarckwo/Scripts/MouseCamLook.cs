@@ -9,7 +9,7 @@ public class MouseCamLook : MonoBehaviourPun
     public float sensitivity = 5.0f;
     [SerializeField]
     public float smoothing = 2.0f;
-    // the chacter is the capsule
+    // the character is the capsule
     public GameObject character;
     // get the incremental value of mouse moving
     private Vector2 mouseLook;
@@ -19,10 +19,8 @@ public class MouseCamLook : MonoBehaviourPun
     // reference variable for player script to access camera pitch.
     //public Quaternion lookAngle;
 
-    private Vector3 cameraPosition;
     private Vector3 cameraOffset;
     public Transform cameraTarget;
-    private Vector3 mouseTarget;
     public Texture2D crosshairTexture;
 
     // Use this for initialization
@@ -43,20 +41,44 @@ public class MouseCamLook : MonoBehaviourPun
     void LateUpdate()
     {
         // camera follows player.
-        cameraPosition = cameraTarget.position + cameraOffset;
+        Vector3 cameraPosition = cameraTarget.position + cameraOffset;
         transform.position = cameraPosition;
 
         // POINT TOWARDS MOUSE CURSOR. 
         //mouseTarget = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 1));
 
-        // I don't like raycasting on update but it's more accurate than the below code.
         Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Plane p = new Plane(Vector3.up, character.transform.position);
+        
+		float height = mouseRay.origin.y - character.transform.position.y;
+		
+		Vector2 offset = new Vector2(mouseRay.direction.x,mouseRay.direction.z);
+		
+		if(mouseRay.direction.y != 0.0f){
+			
+			offset /= -mouseRay.direction.y;
+			offset *= height;
+			
+			Vector3 hitPoint = new Vector3(offset.x + mouseRay.origin.x, character.transform.position.y, offset.y + mouseRay.origin.z);
+			
+			character.transform.LookAt(hitPoint);
+			
+		}
+		
+		//v2: 
+		// I don't like raycasting on update but it's more accurate than the below code.
+		
+		/*Plane p = new Plane(Vector3.up, character.transform.position);
+		
         if(p.Raycast(mouseRay, out float hitDist))
         {
             Vector3 hitPoint = mouseRay.GetPoint(hitDist);
             character.transform.LookAt(hitPoint);
-        }
+        
+		}*/
+		
+		
+		//v1:
+		
 
         // md is mouse delta
         //var md = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));

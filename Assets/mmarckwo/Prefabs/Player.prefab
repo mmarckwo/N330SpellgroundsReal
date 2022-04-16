@@ -305,7 +305,8 @@ MonoBehaviour:
   sensitivity: 5
   smoothing: 2
   character: {fileID: 2678046324212233468}
-  lookAngle: {x: 0, y: 0, z: 0, w: 0}
+  cameraTarget: {fileID: 0}
+  crosshairTexture: {fileID: 0}
 --- !u!1 &2678046324212233468
 GameObject:
   m_ObjectHideFlags: 0
@@ -327,7 +328,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5561699808131834134
 Transform:
   m_ObjectHideFlags: 0
@@ -450,8 +451,13 @@ MonoBehaviour:
   jumpSound: {fileID: 2366799278194064813}
   goodHealth: {r: 0.27058825, g: 1, b: 0.5372549, a: 1}
   lowHealth: {r: 1, g: 0, b: 0.33333334, a: 1}
+  healthLerpSpeed: 5
   hpRestore: {fileID: 1212874843}
   hpDrain: {fileID: 1348589913}
+  deathSound: {fileID: 0}
+  score: 0
+  isMaster: 0
+  gameManager: {fileID: 0}
 --- !u!114 &147685537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -464,10 +470,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bcdd60e5c0f32a4e8e1dab88a366d0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCam: {fileID: 1242690062}
-  attackSpell: {fileID: 5265006535068929657, guid: 846fd401b3920c14885deb82d015f712, type: 3}
-  impulseSpell: {fileID: 5265006535068929657, guid: bddd09bda8a1b4145b90d9567a0874b7, type: 3}
-  speedSpell: {fileID: 5265006535068929657, guid: f083501beda034342aa9c0c78d740ae8, type: 3}
   shootSpeed: 700
   attackSound: {fileID: 6746036797912933400}
   impulseSound: {fileID: 534659099992927969}
