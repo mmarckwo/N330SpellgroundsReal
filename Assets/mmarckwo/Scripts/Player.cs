@@ -73,7 +73,8 @@ public class Player : MonoBehaviourPunCallbacks,IPunInstantiateMagicCallback
 
         if (!this.photonView.IsMine)
         {
-            AudioListener listener = this.GetComponentInChildren<AudioListener>();
+            // go up to the parent then search for component in children.
+            AudioListener listener = this.transform.parent.gameObject.transform.GetComponentInChildren<AudioListener>();
 			if(listener) listener.enabled = false;
 			
             return;
@@ -91,7 +92,7 @@ public class Player : MonoBehaviourPunCallbacks,IPunInstantiateMagicCallback
         healthBarFill = healthBar.GetComponent<Image>();
 
         // get rigidbody component, use custom gravity.
-        rb = GetComponentInChildren<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
 
         // set player to be at full HP.

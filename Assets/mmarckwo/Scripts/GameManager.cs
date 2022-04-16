@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 {
 
     public GameObject playerPrefab;
-    public GameObject enemyPrefab;
+
     private GameObject p1Spawn;
     private GameObject p2Spawn;
 
