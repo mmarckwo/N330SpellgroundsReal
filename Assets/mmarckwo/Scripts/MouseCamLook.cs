@@ -40,6 +40,8 @@ public class MouseCamLook : MonoBehaviourPun
     // LateUpdate so that player's movement updates before the camera's movement.
     void LateUpdate()
     {
+        if (!this.photonView.IsMine) return;
+
         // camera follows player.
         Vector3 cameraPosition = cameraTarget.position + cameraOffset;
         transform.position = cameraPosition;
