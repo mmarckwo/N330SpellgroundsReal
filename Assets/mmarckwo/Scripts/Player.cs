@@ -229,6 +229,7 @@ public class Player : MonoBehaviourPunCallbacks,IPunInstantiateMagicCallback
     void GameResultCheck()
     {
         // when you kill the other player, game tag is Enemy, when you die, game tag is Player.
+        // call EndScreen when any player reaches 3 points.
         if (gameManager.serverPlayer.score == 3)
         {
             gameManager.EndScreen(gameObject.tag);

@@ -87,6 +87,8 @@ public class GameManager : MonoBehaviourPunCallbacks
 	public void EndScreen(string playerType){
 		
 		// playerType is either Player or Enemy.
+		// if you kill the enemy at the 3rd point, you win.
+
 		if(playerType == "Enemy"){
 			
 			Debug.Log("player wins");
