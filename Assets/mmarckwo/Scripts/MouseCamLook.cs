@@ -22,7 +22,8 @@ public class MouseCamLook : MonoBehaviourPun
     private Vector3 cameraOffset;
     public Transform cameraTarget;
     public Texture2D crosshairTexture;
-
+	public Camera particleCamera;
+	
     // Use this for initialization
     void Start()
     {
@@ -31,6 +32,7 @@ public class MouseCamLook : MonoBehaviourPun
         if (!this.photonView.IsMine)
         {
             this.GetComponent<Camera>().enabled = false;
+            this.particleCamera.enabled = false;
         }
         cameraOffset = transform.position - cameraTarget.position;
         //character = this.transform.parent.gameObject;
