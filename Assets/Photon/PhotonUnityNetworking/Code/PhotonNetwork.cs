@@ -2652,7 +2652,7 @@ namespace Photon.Pun
             // if IPunInstantiateMagicCallback is implemented on any script of the instantiated GO, let's call it directly:
             if (!PrefabsWithoutMagicCallback.Contains(parameters.prefabName))
             {
-                var list = go.GetComponents<IPunInstantiateMagicCallback>();
+                var list = go.GetComponentsInChildren<IPunInstantiateMagicCallback>();
                 if (list.Length > 0)
                 {
                     PhotonMessageInfo pmi = new PhotonMessageInfo(parameters.creator, parameters.timestamp, photonViews[0]);

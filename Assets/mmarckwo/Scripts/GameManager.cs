@@ -29,14 +29,17 @@ public class GameManager : MonoBehaviourPunCallbacks
 	private Player SpawnPlayer(string name, bool isMaster, GameObject spawn){
 		
 		
-		GameObject player = PhotonNetwork.Instantiate(this.playerPrefab.name, spawn.transform.position, spawn.transform.rotation);
+		object[] customData = new object[1];
+		customData[0] = isMaster;
+		
+		
+		GameObject player = PhotonNetwork.Instantiate(this.playerPrefab.name, spawn.transform.position, spawn.transform.rotation, 0, customData);
 		
 		player.name = name;
 		//player.tag = "Player";
 		player.transform.Find("Player").tag = "Player";
 		
 		Player newPlayer = player.GetComponentInChildren<Player>();
-		newPlayer.isMaster = isMaster;
 		newPlayer.gameManager = this;
 		
 		return(newPlayer);

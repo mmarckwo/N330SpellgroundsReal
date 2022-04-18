@@ -127,7 +127,8 @@ public class Player : MonoBehaviourPunCallbacks,IPunInstantiateMagicCallback
 		movement *= speed;
 		movement *= Time.deltaTime;
 		
-		transform.Translate(movement);
+		//transform.Translate(movement);
+		transform.position += movement;
 
         // check for jump availability.
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
@@ -354,6 +355,8 @@ public class Player : MonoBehaviourPunCallbacks,IPunInstantiateMagicCallback
 		Debug.Log("Instantiated!");
 		
 		gameManager = GameObject.Find("In-game Manager").GetComponent<GameManager>();
+		
+		this.isMaster = (bool)(info.photonView.InstantiationData[0]);
 		
 		//if(this.photonView.IsMine) return;
 		
