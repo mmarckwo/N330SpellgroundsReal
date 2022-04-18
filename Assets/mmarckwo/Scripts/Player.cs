@@ -221,17 +221,24 @@ public class Player : MonoBehaviourPunCallbacks,IPunInstantiateMagicCallback
 			ScoreUpdate(gameManager.serverPlayer.score,gameManager.masterPlayer.score);
 			
 		}
+
+        GameResultCheck();
 		
-		if(gameManager.serverPlayer.score == 3){
-			
-			gameManager.EndScreen(!this.isMaster);
-			
-		}else if(gameManager.masterPlayer.score == 3){
-			
-			gameManager.EndScreen(this.isMaster);
-			
-		}
-		
+    }
+
+    void GameResultCheck()
+    {
+        // when you kill the other player, game tag is Enemy, when you die, game tag is Player.
+        if (gameManager.serverPlayer.score == 3)
+        {
+            gameManager.EndScreen(gameObject.tag);
+
+        }
+        else if (gameManager.masterPlayer.score == 3)
+        {
+            gameManager.EndScreen(gameObject.tag);
+
+        }
     }
 
     void ScoreUpdate(int leftScore, int rightScore)

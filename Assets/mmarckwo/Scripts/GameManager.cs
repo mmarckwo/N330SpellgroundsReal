@@ -84,9 +84,10 @@ public class GameManager : MonoBehaviourPunCallbacks
 		
     }
 	
-	public void EndScreen(bool won){
+	public void EndScreen(string playerType){
 		
-		if(won){
+		// playerType is either Player or Enemy.
+		if(playerType == "Enemy"){
 			
 			Debug.Log("player wins");
 			Cursor.lockState = CursorLockMode.Confined;
