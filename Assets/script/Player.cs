@@ -18,7 +18,10 @@ public class Player : MonoBehaviourPunCallbacks,IPunInstantiateMagicCallback
 
     public float baseSpeed = 10.0f;
     public float speed = 10.0f;
-
+	
+	[HideInInspector]
+	public Vector3 velocity = new Vector3(0.0f,0.0f,0.0f); //How fast we are going.
+	
     // player will use its own gravity for jump physics.
     public float gravityScale = 1.0f;
     public static float globalGravity = -9.81f;
@@ -114,21 +117,20 @@ public class Player : MonoBehaviourPunCallbacks,IPunInstantiateMagicCallback
         // movement.
         float translation = Input.GetAxis("Vertical");
         float straffe = Input.GetAxis("Horizontal");
-        Vector3 movement = new Vector3(straffe, 0, translation);
+        this.velocity = new Vector3(straffe, 0, translation);
 		
-		float movementMagnitudeSquared = movement.sqrMagnitude;
+		float movementMagnitudeSquared = this.velocity.sqrMagnitude;
 		
 		if(movementMagnitudeSquared > 1.0f){
 			
-			movement /= Mathf.Sqrt(movementMagnitudeSquared);
+			this.velocity /= Mathf.Sqrt(movementMagnitudeSquared);
 			
 		}
 		
-		movement *= speed;
-		movement *= Time.deltaTime;
+		this.velocity *= speed;
 		
 		//transform.Translate(movement);
-		transform.position += movement;
+		transform.position += this.velocity * Time.deltaTime;
 
         // check for jump availability.
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);

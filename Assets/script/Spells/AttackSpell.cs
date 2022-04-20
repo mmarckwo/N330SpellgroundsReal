@@ -18,6 +18,8 @@ public class AttackSpell : MonoBehaviourPun
     {
         timer += Time.deltaTime;
 
+		Debug.Log(this.GetComponent<Rigidbody>().velocity);
+		
         // destroy self after destroyTime interval.
         if(timer > destroyTime)
         {
