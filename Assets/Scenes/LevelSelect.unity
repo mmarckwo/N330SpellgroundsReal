@@ -219,6 +219,7 @@ GameObject:
   - component: {fileID: 98854588}
   - component: {fileID: 98854587}
   - component: {fileID: 98854590}
+  - component: {fileID: 98854591}
   m_Layer: 5
   m_Name: Castle Button
   m_TagString: Untagged
@@ -385,6 +386,18 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &98854591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 98854585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66fd66b034bd74c44a700f18abbd5fae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &104360884
 GameObject:
   m_ObjectHideFlags: 0
@@ -557,6 +570,7 @@ GameObject:
   - component: {fileID: 643963481}
   - component: {fileID: 643963480}
   - component: {fileID: 643963483}
+  - component: {fileID: 643963484}
   m_Layer: 5
   m_Name: Sky Button
   m_TagString: Untagged
@@ -723,6 +737,18 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &643963484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 643963478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66fd66b034bd74c44a700f18abbd5fae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &679825097
 GameObject:
   m_ObjectHideFlags: 0
