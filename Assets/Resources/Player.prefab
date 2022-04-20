@@ -493,6 +493,7 @@ MonoBehaviour:
   jumpForce: 22.5
   baseSpeed: 10
   speed: 0
+  velocity: {x: 0, y: 0, z: 0}
   gravityScale: 2.5
   groundCheck: {fileID: 182155893}
   groundDistance: 0.5
@@ -521,7 +522,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bcdd60e5c0f32a4e8e1dab88a366d0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootSpeed: 700
+  shootSpeed: 12
   attackSound: {fileID: 6746036797912933400}
   impulseSound: {fileID: 534659099992927969}
   speedSound: {fileID: 3228475772892654059}

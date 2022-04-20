@@ -15,7 +15,7 @@ public class PlayerAttack : MonoBehaviourPun
     private string attackSpell = "AttackSpell";
     private string impulseSpell = "ImpulseSpell";
     private string speedSpell = "SpeedSpell";
-    public float shootSpeed = 700f;
+    public float shootSpeed = 12f;
     private int spellSelect = 1;        // default to attack spell.
     private GameObject attack;
 
@@ -44,6 +44,8 @@ public class PlayerAttack : MonoBehaviourPun
     private float maxTime = 3f;
 
     private bool onCooldown = false;
+	
+	private Player player; //reference to player script
 
     private void Start()
     {
@@ -58,7 +60,25 @@ public class PlayerAttack : MonoBehaviourPun
         attackIndicator = attackIndicatorObject.GetComponent<TextMeshProUGUI>();
         impulseIndicator = impulseIndicatorObject.GetComponent<TextMeshProUGUI>();
         speedIndicator = speedIndicatorObject.GetComponent<TextMeshProUGUI>();
+		
+		//get player script
+		
+		this.player = GetComponent<Player>();
+		
+		
     }
+	
+	void ShootSpell(string prefabName){
+		
+		attack = PhotonNetwork.Instantiate(prefabName, transform.position, (transform.rotation));
+		attackSound.Play();
+		
+		Rigidbody rb = attack.GetComponent<Rigidbody>();
+		
+		rb.AddRelativeForce(new Vector3(0, 0, shootSpeed),ForceMode.Impulse);
+		rb.AddForce(player.velocity,ForceMode.Impulse);
+		
+	}
 
     void Update()
     {
@@ -100,25 +120,17 @@ public class PlayerAttack : MonoBehaviourPun
             switch(spellSelect)
             {
                 case 1:
-                    attack = PhotonNetwork.Instantiate(attackSpell, transform.position, (transform.rotation)); // * playerCam.lookAngle
-                    attackSound.Play();
-                    attack.GetComponent<Rigidbody>().AddRelativeForce(0, 0, shootSpeed);
+					ShootSpell(attackSpell);
                     break;
                 case 2:
-                    attack = PhotonNetwork.Instantiate(impulseSpell, transform.position, (transform.rotation));
-                    impulseSound.Play();
-                    attack.GetComponent<Rigidbody>().AddRelativeForce(0, 0, shootSpeed);
+					ShootSpell(impulseSpell);
                     break;
                 case 3:
-                    attack = PhotonNetwork.Instantiate(speedSpell, transform.position, (transform.rotation));
-                    speedSound.Play();
-                    attack.GetComponent<Rigidbody>().AddRelativeForce(0, 0, shootSpeed);
+					ShootSpell(speedSpell);
                     break;
                 default:
                     Debug.Log("default attack");
-                    attack = PhotonNetwork.Instantiate(attackSpell, transform.position, (transform.rotation));
-                    attackSound.Play();
-                    attack.GetComponent<Rigidbody>().AddRelativeForce(0, 0, shootSpeed);
+					ShootSpell(attackSpell);
                     break;
             }
 
