@@ -4,37 +4,34 @@ using UnityEngine;
 using Photon.Realtime;
 using Photon.Pun;
 
-public class RoomListScript : MonoBehaviourPun
+public class RoomListScript : MonoBehaviourPunCallbacks
 {
 
-    private Dictionary<string, RoomInfo> cachedRoomList = new Dictionary<string, RoomInfo>();
+    [SerializeField] private Transform content;
+    [SerializeField] private RoomListing roomListing;
 
-    private void UpdateCachedRoomList(List<RoomInfo> roomList)
+    private List<RoomListing> listings = new List<RoomListing>();
+
+    public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
+
         for (int i = 0; i < roomList.Count; i++)
         {
-            RoomInfo info = roomList[i];
-            if (info.RemovedFromList)
+            if (roomList[i].RemovedFromList)
             {
-                cachedRoomList.Remove(info.Name);
-            }
+                int index = listings.FindIndex(x => x.RoomInfo.Name == roomList[i].Name);
+                if (index != -1)
+                {
+                    Destroy(listings[index].gameObject);
+                    listings.RemoveAt(index);
+                }
+            } 
             else
             {
-                cachedRoomList[info.Name] = info;
+                RoomListing listing = Instantiate(roomListing, content);
+                listing.SetRoomInfo(roomList[i]);
+                listings.Add(listing);
             }
         }
-    }
-
-    public void RoomListUpdate(List<RoomInfo> roomList)
-    {
-        // clear list of rooms.
-        cachedRoomList.Clear();
-        // here you get the response, empty list if no rooms found
-        UpdateCachedRoomList(roomList);
-    }
-
-    public void RoomListClear()
-    {
-        cachedRoomList.Clear();
     }
 }
