@@ -72,14 +72,6 @@ public class MPLauncher : MonoBehaviourPunCallbacks
 
     public void StartGame()
     {
-        // DELETE THIS WHEN DONE.
-        if (PhotonNetwork.IsMasterClient)
-        {
-            // nothing.
-        } else
-        {
-            PhotonNetwork.JoinRandomRoom();
-        }
 
         if (PhotonNetwork.IsMasterClient)
         {
