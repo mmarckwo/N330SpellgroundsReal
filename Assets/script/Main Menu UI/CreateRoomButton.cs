@@ -11,6 +11,9 @@ public class CreateRoomButton : MonoBehaviourPunCallbacks
 
     [SerializeField] private TMP_InputField roomName;
 
+    [SerializeField] private GameObject screen2;
+    [SerializeField] private GameObject screen3;
+
     public void Click_CreateRoom()
     {
         Debug.Log("Making room");
@@ -28,6 +31,8 @@ public class CreateRoomButton : MonoBehaviourPunCallbacks
     public override void OnCreatedRoom()
     {
         Debug.Log("Made room with name of: " + roomName.text);
+        screen2.SetActive(false);
+        screen3.SetActive(true);
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)

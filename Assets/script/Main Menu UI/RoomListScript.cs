@@ -10,6 +10,9 @@ public class RoomListScript : MonoBehaviourPunCallbacks
     [SerializeField] private Transform content;
     [SerializeField] private RoomListing roomListing;
 
+    [SerializeField] private GameObject screen2;
+    [SerializeField] private GameObject screen3;
+
     private List<RoomListing> listings = new List<RoomListing>();
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
@@ -33,5 +36,11 @@ public class RoomListScript : MonoBehaviourPunCallbacks
                 listings.Add(listing);
             }
         }
+    }
+
+    public override void OnJoinedRoom()
+    {
+        screen2.SetActive(false);
+        screen3.SetActive(true);
     }
 }

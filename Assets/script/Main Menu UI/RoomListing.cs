@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Photon.Realtime;
+using Photon.Pun;
 
 public class RoomListing : MonoBehaviour
 {
@@ -16,5 +17,10 @@ public class RoomListing : MonoBehaviour
     {
         RoomInfo = roomInfo;
         text.text = roomInfo.Name;
+    }
+
+    public void Click_JoinRoom()
+    {
+        PhotonNetwork.JoinRoom(RoomInfo.Name);
     }
 }
