@@ -16,13 +16,18 @@ public class PlayerListingMenu : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
     {
         count++;
-        playerCountText.SetText("Connected players: " + count.ToString());
+        this.photonView.RPC("UpdatePlayerCount", RpcTarget.AllBuffered, count);
     }
     public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
     {
         count--;
-        playerCountText.SetText("Connect players: " + count.ToString());
+        this.photonView.RPC("UpdatePlayerCount", RpcTarget.AllBuffered, count);
     }
 
-    // need to put a punrpc in here?
+    [PunRPC]
+    private void UpdatePlayerCount(int playerCount)
+    {
+        count = playerCount;
+        playerCountText.SetText("Connect players: " + count);
+    }
 }
