@@ -17,6 +17,7 @@ public class Player : MonoBehaviourPunCallbacks,IPunInstantiateMagicCallback
     public float jumpForce = 10.0f;
 
     public float baseSpeed = 10.0f;
+	[HideInInspector]
     public float speed = 10.0f;
 	
 	[HideInInspector]

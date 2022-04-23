@@ -32,6 +32,9 @@ public class MouseCamLook : MonoBehaviourPun
 	public Camera particleCamera;
 	
 	public GameObject playerCone;
+	private SpriteRenderer spriteRenderer; //sprite renderer of player con
+	
+	public PlayerAttack playerAttack; //reference to player attack script
 	
 	public float GetInaccurateAngle()
 	{
@@ -55,29 +58,40 @@ public class MouseCamLook : MonoBehaviourPun
 	void setPlayerConeVisual()
 	{
 		
+		const float angleBias = 0.07f;
 		const float scaleFactor = 2.0f;
 		
 		//get angle
-		float angle = this.inaccuracy * this.inaccuracyMultiplier;
+		float angle = this.inaccuracy * this.inaccuracyMultiplier + angleBias;
 		
 		float scale = Mathf.Tan(angle) * scaleFactor;
 		
 		playerCone.transform.localScale = new Vector3(scale*playerCone.transform.localScale.y,playerCone.transform.localScale.y,playerCone.transform.localScale.z);
+		
+		float ratio = playerAttack.chargeTimer/playerAttack.chargeSpeed;
+		float colorRatio = 1.0f-0.5f*ratio;
+		float alpha = (50.0f/255.0f) + 0.2f*ratio;
+		
+		spriteRenderer.color = new Color(1.0f,colorRatio,colorRatio,alpha);
 		
 	}
 	
     // Use this for initialization
     void Start()
     {
-
+		
         this.GetComponent<Camera>().enabled = true;
-        if (!this.photonView.IsMine)
+        
+		if (!this.photonView.IsMine)
         {
             this.GetComponent<Camera>().enabled = false;
             this.particleCamera.enabled = false;
 			this.playerCone.SetActive(false);
         }
-        cameraOffset = transform.position - cameraTarget.position;
+        
+		this.spriteRenderer = playerCone.GetComponent<SpriteRenderer>();
+		
+		cameraOffset = transform.position - cameraTarget.position;
         //character = this.transform.parent.gameObject;
         Cursor.SetCursor(crosshairTexture, Vector2.zero, CursorMode.Auto);
 		

@@ -16,6 +16,7 @@ public class PlayerAttack : MonoBehaviourPun
     private string impulseSpell = "ImpulseSpell";
     private string speedSpell = "SpeedSpell";
     public float shootSpeed = 12f;
+	public float chargedShootSpeed;
     private int spellSelect = 1;        // default to attack spell.
 
     [Header("Spell indicator icons")]
@@ -35,12 +36,14 @@ public class PlayerAttack : MonoBehaviourPun
     // keep this at the bottom of public variables because of the header
     [Header("ACTUAL COOLDOWN SPEED IS: set value + 0.02.")]
     public float castSpeed = .28f;
-
+	public float chargeSpeed = 1.0f;
+	
     // vVv private variables vVv
 
-    // timer doesn't track over maxTime seconds.
-    private float timer;
-    private float maxTime = 3f;
+	private float maxTime = 3f;
+    private float cooldownTimer; //Tracks time since the last time a shot was fired. Doesn't track over maxTime seconds.
+	[HideInInspector]
+    public float chargeTimer; //Tracks how long we've been holding down the fire button. Doesn't track over maxTime seconds.
 
     private bool onCooldown = false;
 	
@@ -66,7 +69,7 @@ public class PlayerAttack : MonoBehaviourPun
 		
     }
 	
-	void ShootSpell(string prefabName){
+	void ShootSpell(bool charged,string prefabName){
 		
 		GameObject attack = PhotonNetwork.Instantiate(prefabName, transform.position, (transform.rotation));
 		attackSound.Play();
@@ -75,12 +78,47 @@ public class PlayerAttack : MonoBehaviourPun
 		
 		float angle = this.mouseCamLook.GetInaccurateAngle();
 		
-		Vector3 shootDireciton = new Vector3(shootSpeed*Mathf.Sin(angle), 0, shootSpeed*Mathf.Cos(angle));
+		float usedShootSpeed;
+		
+		if(charged){
+			
+			usedShootSpeed = chargedShootSpeed;
+			
+		}else{
+			
+			usedShootSpeed = shootSpeed;
+			
+		}
+		
+		Vector3 shootDireciton = new Vector3(usedShootSpeed*Mathf.Sin(angle), 0, usedShootSpeed*Mathf.Cos(angle));
 		
 		rb.AddRelativeForce(shootDireciton,ForceMode.Impulse);
 		rb.AddForce(player.velocity,ForceMode.Impulse);
 		
 		//Debug.Log(angle);
+		
+	}
+	
+	void ShootSpell(bool charged){
+		
+		// switch statement that shoots whatever spell the player has selected.
+		// instantiate rotation arg combines player rotation and camera pitch.
+		switch(spellSelect)
+		{
+			case 1:
+				ShootSpell(charged,attackSpell);
+				break;
+			case 2:
+				ShootSpell(charged,impulseSpell);
+				break;
+			case 3:
+				ShootSpell(charged,speedSpell);
+				break;
+			default:
+				Debug.Log("default attack");
+				ShootSpell(charged,attackSpell);
+				break;
+		}
 		
 	}
 
@@ -115,54 +153,51 @@ public class PlayerAttack : MonoBehaviourPun
         // when the player clicks and they're not on cooldown.
         if (Input.GetButtonDown("Fire1") && !onCooldown)
         {
-            // set cooldown timer to 0.
-            timer = 0.0f;
+            // set cooldown cooldownTimer to 0.
+            cooldownTimer = 0.0f;
             onCooldown = true;
 
-            // switch statement that shoots whatever spell the player has selected.
-            // instantiate rotation arg combines player rotation and camera pitch.
-            switch(spellSelect)
-            {
-                case 1:
-					ShootSpell(attackSpell);
-                    break;
-                case 2:
-					ShootSpell(impulseSpell);
-                    break;
-                case 3:
-					ShootSpell(speedSpell);
-                    break;
-                default:
-                    Debug.Log("default attack");
-					ShootSpell(attackSpell);
-                    break;
-            }
-
-        }
-
-        // attempt to get player camera x rotation to rotate player model. idk.
-        //playerXRotation = playerCam.GetComponent<Transform>().eulerAngles.y;
-        //transform.rotation *= playerCam.lookAngle;
-        //Debug.Log(playerCam.lookAngle);
-    }
+            ShootSpell(false);
+			
+        }else if(chargeTimer > chargeSpeed){
+			
+			chargeTimer = 0.0f;
+			
+			ShootSpell(true);
+			
+		}
+		
+	}
 
     void FixedUpdate()
     {
         // this counts the time for the player in seconds.
-        // timer is not dependent on framerate.
-        // count time while timer is not over max time.
-        if (timer <= maxTime)
+        // cooldownTimer is not dependent on framerate.
+        // count time while cooldownTimer is not over max time.
+        if (cooldownTimer <= maxTime)
         {
             // seconds are counted here.
-            timer += Time.deltaTime;
-            //Debug.Log(timer);
+            cooldownTimer += Time.deltaTime;
+            //Debug.Log(cooldownTimer);
 
-            // if timer is over cooldown time while player is on cooldown, set cooldown off.
-            if ((timer >= castSpeed) && onCooldown)
+            // if cooldownTimer is over cooldown time while player is on cooldown, set cooldown off.
+            if ((cooldownTimer >= castSpeed) && onCooldown)
             {
                 onCooldown = false;
                 //Debug.Log("cooldown reset.");
             }
-        }   
+			
+        }
+		
+		if(chargeTimer <= maxTime && Input.GetButton("Fire1")){
+			
+			chargeTimer += Time.deltaTime;
+			
+		}else{
+			
+			chargeTimer = 0.0f;
+			
+		}
+		
     }
 }
