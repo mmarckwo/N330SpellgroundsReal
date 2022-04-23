@@ -17,7 +17,6 @@ public class PlayerAttack : MonoBehaviourPun
     private string speedSpell = "SpeedSpell";
     public float shootSpeed = 12f;
     private int spellSelect = 1;        // default to attack spell.
-    private GameObject attack;
 
     [Header("Spell indicator icons")]
     private TextMeshProUGUI attackIndicator;
@@ -46,6 +45,7 @@ public class PlayerAttack : MonoBehaviourPun
     private bool onCooldown = false;
 	
 	private Player player; //reference to player script
+	public MouseCamLook mouseCamLook; //reference to mouseCamLook script
 
     private void Start()
     {
@@ -61,22 +61,26 @@ public class PlayerAttack : MonoBehaviourPun
         impulseIndicator = impulseIndicatorObject.GetComponent<TextMeshProUGUI>();
         speedIndicator = speedIndicatorObject.GetComponent<TextMeshProUGUI>();
 		
-		//get player script
-		
+		//get player, mouseCamLook scripts
 		this.player = GetComponent<Player>();
-		
 		
     }
 	
 	void ShootSpell(string prefabName){
 		
-		attack = PhotonNetwork.Instantiate(prefabName, transform.position, (transform.rotation));
+		GameObject attack = PhotonNetwork.Instantiate(prefabName, transform.position, (transform.rotation));
 		attackSound.Play();
 		
 		Rigidbody rb = attack.GetComponent<Rigidbody>();
 		
-		rb.AddRelativeForce(new Vector3(0, 0, shootSpeed),ForceMode.Impulse);
+		float angle = this.mouseCamLook.GetInaccurateAngle();
+		
+		Vector3 shootDireciton = new Vector3(shootSpeed*Mathf.Sin(angle), 0, shootSpeed*Mathf.Cos(angle));
+		
+		rb.AddRelativeForce(shootDireciton,ForceMode.Impulse);
 		rb.AddForce(player.velocity,ForceMode.Impulse);
+		
+		//Debug.Log(angle);
 		
 	}
 

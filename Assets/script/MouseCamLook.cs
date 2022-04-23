@@ -16,8 +16,13 @@ public class MouseCamLook : MonoBehaviourPun
     // smooth the mouse moving
     private Vector2 smoothV;
 	
-	public float mouseFollow;
-
+	public float mouseFollow; //how much should the camera move to follow the mouse pointer?
+	
+	float inaccuracy; //accumulated variable of how "inaccurate" we are. Increased by x radians when the player rotates x radians.
+	public float inaccuracyCooldown; //every second, we decrement inaccuracy by this much.
+	public float inaccuracyMultiplier; //for every degree in the inaccuracy accumulator, how many radians (in either direction) could the player's shot miss by?
+	public float inaccuracyMax; //maximum inaccuracy we can have in the inaccuracy accumulator.
+	
     // reference variable for player script to access camera pitch.
     //public Quaternion lookAngle;
 
@@ -25,6 +30,41 @@ public class MouseCamLook : MonoBehaviourPun
     public Transform cameraTarget;
     public Texture2D crosshairTexture;
 	public Camera particleCamera;
+	
+	public GameObject playerCone;
+	
+	public float GetInaccurateAngle()
+	{
+		
+		float radius = this.inaccuracy * this.inaccuracyMultiplier;
+		
+		/*if(Random.Range(0.0f,1.0f) <= 0.5f){
+			
+			return(radius);
+			
+		}else{
+			
+			return(-radius);
+			
+		}*/
+		
+		return(Random.Range(-radius,radius));
+		
+	}
+	
+	void setPlayerConeVisual()
+	{
+		
+		const float scaleFactor = 2.0f;
+		
+		//get angle
+		float angle = this.inaccuracy * this.inaccuracyMultiplier;
+		
+		float scale = Mathf.Tan(angle) * scaleFactor;
+		
+		playerCone.transform.localScale = new Vector3(scale*playerCone.transform.localScale.y,playerCone.transform.localScale.y,playerCone.transform.localScale.z);
+		
+	}
 	
     // Use this for initialization
     void Start()
@@ -35,17 +75,22 @@ public class MouseCamLook : MonoBehaviourPun
         {
             this.GetComponent<Camera>().enabled = false;
             this.particleCamera.enabled = false;
+			this.playerCone.SetActive(false);
         }
         cameraOffset = transform.position - cameraTarget.position;
         //character = this.transform.parent.gameObject;
         Cursor.SetCursor(crosshairTexture, Vector2.zero, CursorMode.Auto);
+		
+		inaccuracy = 0.0f;
     }
 
     // LateUpdate so that player's movement updates before the camera's movement.
     void LateUpdate()
     {
         if (!this.photonView.IsMine) return;
-
+		
+		inaccuracy = Mathf.Max(0.0f,inaccuracy-inaccuracyCooldown*Time.deltaTime);
+		
         // set the position of the camera to the middle of the player.
         Vector3 cameraPosition = cameraTarget.position + cameraOffset;
         transform.position = cameraPosition;
@@ -78,7 +123,37 @@ public class MouseCamLook : MonoBehaviourPun
 		hitPoint += mouseOffset;
         transform.position = cameraPosition;
 		
+		Vector3 previousDirection = character.transform.forward;
+		
 		character.transform.LookAt(hitPoint);
+		
+		Vector3 currentDirection = character.transform.forward;
+		
+		currentDirection.Normalize();
+		previousDirection.Normalize();
+		
+		float directionDifference = Mathf.Acos(Vector3.Dot(currentDirection,previousDirection));
+		
+		if(!float.IsNaN(directionDifference)){
+			
+			//Debug.Log(currentDirection);
+			//Debug.Log(previousDirection);
+			
+			directionDifference = Mathf.Abs(directionDifference);
+			
+			/*if(directionDifference >= 0.05f){
+				
+				Debug.Log(currentDirection);
+				Debug.Log(previousDirection);
+				Debug.Log(directionDifference);
+				
+			}*/
+			
+			inaccuracy = Mathf.Min(inaccuracy+directionDifference,inaccuracyMax);
+			
+		}
+		
+		setPlayerConeVisual();
 		
     }
 }

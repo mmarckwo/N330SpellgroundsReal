@@ -17,8 +17,6 @@ public class AttackSpell : MonoBehaviourPun
     void FixedUpdate()
     {
         timer += Time.deltaTime;
-
-		Debug.Log(this.GetComponent<Rigidbody>().velocity);
 		
         // destroy self after destroyTime interval.
         if(timer > destroyTime)
