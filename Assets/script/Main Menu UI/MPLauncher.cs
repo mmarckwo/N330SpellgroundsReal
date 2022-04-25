@@ -99,4 +99,10 @@ public class MPLauncher : MonoBehaviourPunCallbacks
         // swtich to castle level.
         PhotonNetwork.LoadLevel("arena2");
     }
+
+    public void LoadSciFi()
+    {
+        // swtich to castle level.
+        PhotonNetwork.LoadLevel("arena3");
+    }
 }
