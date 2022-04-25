@@ -28,6 +28,6 @@ public class PlayerListingMenu : MonoBehaviourPunCallbacks
     private void UpdatePlayerCount(int playerCount)
     {
         count = playerCount;
-        playerCountText.SetText("Connect players: " + count);
+        playerCountText.SetText("Connected players: " + count);
     }
 }
