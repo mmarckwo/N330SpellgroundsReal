@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spellName: Impulse
-  forceStrength: 20
+  forceStrength: 30
   impulseHit: {fileID: 8300000, guid: 0ea197b943d50e3408a524a41735cd70, type: 3}
 --- !u!114 &-7599103933783114748
 MonoBehaviour:
